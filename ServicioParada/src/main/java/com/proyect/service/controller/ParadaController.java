@@ -42,7 +42,7 @@ public class ParadaController {
 		}
 	}
 	
-	@PostMapping
+	@PostMapping("/save")
 	public String save(@RequestBody Parada parada) {
 		if(service.save(parada)) {
 			return "guardado";
