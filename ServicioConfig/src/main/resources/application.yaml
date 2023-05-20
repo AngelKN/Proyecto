@@ -1,0 +1,12 @@
+server:
+  port: 8081
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          default-label: ServicioConfig
+          uri: https://github.com/AngelKN/Proyecto
+          search-paths: ServicioConfigData
+  aplication:
+    name: ServicioConfig
