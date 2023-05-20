@@ -5,7 +5,7 @@ spring:
     config:
       server:
         git:
-          default-label: ServicioConfig
+          default-label: eureka
           uri: https://github.com/AngelKN/Proyecto
           search-paths: ServicioConfigData
   aplication:
