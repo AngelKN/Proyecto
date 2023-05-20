@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: ServicioGateway
+  cloud:
+    config:
+      enabled: true
+      uri: http://localhost:8081
+  data:
+    mongodb:
+      uri: mongodb+srv://project:9999@project.dwyjnxn.mongodb.net/Project
