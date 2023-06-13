@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Ruta {
 
+	private String id;
 	private String nombre;
 	private String tipo;
 	private List<String> paradas;

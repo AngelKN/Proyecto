@@ -31,11 +31,13 @@ public class UsuarioController {
 		return "Miaow";
 	}
 	
+	//LISTA USUARIOS
 	@GetMapping("/all")
 	public List<Usuario> findAll(){
 		return service.getAll();
 	}
 	
+	//BUSCAR USUARIO
 	@GetMapping("/find/{nombre}")
 	public Optional<Usuario> findById(@PathVariable("nombre") String nombre){
 		Optional<Usuario> user = service.getUsuarioByNombre(nombre);
@@ -46,6 +48,7 @@ public class UsuarioController {
 		}
 	}
 	
+	//NUEVO USUARIO
 	@PostMapping("/save")
 	public String save(@RequestBody Usuario user) {
 		if(service.save(user)) {
@@ -55,6 +58,7 @@ public class UsuarioController {
 		}
 	}
 	
+	//ELIMINAR USUARIO
 	@DeleteMapping("/delete/{nombre}")
 	public String delete(@PathVariable("nombre") String nombre) {
 		if(service.delete(nombre)) {
@@ -64,6 +68,7 @@ public class UsuarioController {
 		}
 	}
 	
+	//ACTUALIZAR USUARIO
 	@PostMapping("/update")
 	public String update(@RequestBody Usuario user) {
 		
@@ -74,21 +79,120 @@ public class UsuarioController {
 		}
 	}
 	
-	@GetMapping("/pr")
-	public ResponseEntity<List<PuntoRecarga>> getPuntosRecarga(){
-		List<PuntoRecarga> prs = service.getPuntosRecarga();
-		return ResponseEntity.ok(prs);
+	//LOGIN
+	@GetMapping("/login")
+	public Optional<Usuario> login(@RequestBody Usuario user) {
+		Optional<Usuario> luser = service.login(user.getCorreo(), user.getContraseña());
+		
+		if(luser != null) {
+			return luser;
+		}else {
+			return null;
+		}
 	}
 	
-	@GetMapping("/parada")
-	public ResponseEntity<List<Parada>> getParadas(){
-		List<Parada> parada = service.getParadas();
-		return ResponseEntity.ok(parada);
+	//NUEVA PARADA
+	@PostMapping("/saveparada")
+	public String saveParada(@RequestBody Parada parada) {
+		String nuevo = service.saveParada(parada);
+		return nuevo;
 	}
 	
-	@GetMapping("/ruta")
-	public ResponseEntity<List<Ruta>> getRuta(){
-		List<Ruta> ruta = service.getRutas();
-		return ResponseEntity.ok(ruta);
+	//ACTUALIZAR PARADA
+	@PostMapping("/updateparada")
+	public String updateParada(@RequestBody Parada parada) {
+		String nuevo = service.updateParada(parada);
+		return nuevo;
+	}
+	
+	//LISTA DE PARADAS
+	@GetMapping("/paradas")
+	public List<Parada> findAllParadas(){
+		List<Parada> paradas = service.findAllParada();
+		return paradas;
+	}
+	
+	//BUSCAR PARADA
+	@GetMapping("/paradas/{ubicacion}")
+	public Optional<Parada> findParada(@PathVariable("ubicacion") String ubicacion){
+		Optional<Parada> parada = service.findParada(ubicacion);
+		return parada;
+	}
+	
+	//ELIMINAR PARADA
+	@DeleteMapping("/deleteparada/{ubicacion}")
+	public String deleteParada(@PathVariable("ubicacion") String ubicacion){
+		String eliminar = service.deleteParada(ubicacion);
+		return eliminar;
+	}
+	
+	//NUEVO PUNTO
+	@PostMapping("/savepunto")
+	public String savePunto(@RequestBody PuntoRecarga pr) {
+		String nuevo = service.savePunto(pr);
+		return nuevo;
+	}
+	
+	//ACTUALIZAR PUNTO
+	@PostMapping("/updatepunto")
+	public String updatePunto(@RequestBody PuntoRecarga pr) {
+		String nuevo = service.updatePunto(pr);
+		return nuevo;
+	}
+	
+	//LISTA DE PUNTO
+	@GetMapping("/puntos")
+	public List<PuntoRecarga> findAllPunto(){
+		List<PuntoRecarga> pr = service.findAllPunto();
+		return pr;
+	}
+	
+	//BUSCAR PUNTO
+	@GetMapping("/punto/{ubicacion}")
+	public Optional<PuntoRecarga> findPunto(@PathVariable("ubicacion") String ubicacion){
+		Optional<PuntoRecarga> punto = service.findPunto(ubicacion);
+		return punto;
+	}
+	
+	//ELIMINAR PUNTO
+	@DeleteMapping("/deletepunto/{ubicacion}")
+	public String deletePunto(@PathVariable("ubicacion") String ubicacion){
+		String eliminar = service.deletePunto(ubicacion);
+		return eliminar;
+	}
+	
+	//NUEVO RUTA
+	@PostMapping("/saveruta")
+	public String saveRuta(@RequestBody Ruta pr) {
+		String nuevo = service.saveRuta(pr);
+		return nuevo;
+	}
+	
+	//ACTUALIZAR RUTA
+	@PostMapping("/updateruta")
+	public String updateRuta(@RequestBody Ruta pr) {
+		String nuevo = service.updateRuta(pr);
+		return nuevo;
+	}
+	
+	//LISTA DE RUTAS
+	@GetMapping("/rutas")
+	public List<Ruta> findAllRuta(){
+		List<Ruta> ruta = service.findAllRuta();
+		return ruta;
+	}
+	
+	//BUSCAR RUTA
+	@GetMapping("/ruta/{ubicacion}")
+	public Optional<Ruta> findRuta(@PathVariable("ubicacion") String ubicacion){
+		Optional<Ruta> ruta = service.findRuta(ubicacion);
+		return ruta;
+	}
+	
+	//ELIMINAR RUTA
+	@DeleteMapping("/deleteruta/{ubicacion}")
+	public String deleteRuta(@PathVariable("ubicacion") String ubicacion){
+		String eliminar = service.deleteRuta(ubicacion);
+		return eliminar;
 	}
 }

@@ -2,7 +2,8 @@ package com.proyect.service.models;
 
 public class PuntoRecarga {
 
-private String nombre;
+	private String id;
+	private String nombre;
 	
 	private String ubicacion;
 	
@@ -12,6 +13,20 @@ private String nombre;
 		super();
 	}
 	
+	
+	
+	public String getId() {
+		return id;
+	}
+
+
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+
+
 	public String getNombre() {
 		return nombre;
 	}
