@@ -1,5 +1,6 @@
 package com.proyect.service.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +32,18 @@ public class PuntoRecargarService {
 		return pr;	
 	}
 	
+	public Optional<PuntoRecarga> getUsuarioById(String id){
+		Optional<PuntoRecarga> punto = repo.findById(id);
+		
+		/*for(Ruta item :repo.findAll()) {
+			if(item.getNombre().equals(nombre)) {
+				ruta = repo.findById(item.getId());
+			}
+		}*/
+		
+		return punto;	
+	}
+	
 	public boolean save(PuntoRecarga pr) {
 		Optional<PuntoRecarga> vpr = getUsuarioByNombre(pr.getNombre());
 		
@@ -44,7 +57,7 @@ public class PuntoRecargarService {
 	
 	public boolean delete(String nombre) {
 		
-		Optional<PuntoRecarga> pr = getUsuarioByNombre(nombre);
+		Optional<PuntoRecarga> pr = getUsuarioById(nombre);
 		
 		if(!pr.equals(Optional.empty())){
 			repo.deleteById(pr.get().getId());
@@ -56,7 +69,7 @@ public class PuntoRecargarService {
 	
 	public boolean update(PuntoRecarga pr) {
 
-		Optional<PuntoRecarga> vpr = getUsuarioByNombre(pr.getNombre());
+		Optional<PuntoRecarga> vpr = getUsuarioById(pr.getId());
 		
 		if(!vpr.equals(Optional.empty())){
 			repo.save(pr);

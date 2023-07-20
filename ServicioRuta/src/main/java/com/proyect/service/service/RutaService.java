@@ -19,6 +19,18 @@ public class RutaService {
 		return repo.findAll();
 	}
 	
+	public Optional<Ruta> getUsuarioById(String id){
+		Optional<Ruta> ruta = repo.findById(id);
+		
+		/*for(Ruta item :repo.findAll()) {
+			if(item.getNombre().equals(nombre)) {
+				ruta = repo.findById(item.getId());
+			}
+		}*/
+		
+		return ruta;	
+	}
+	
 	public Optional<Ruta> getUsuarioByNombre(String nombre){
 		Optional<Ruta> ruta = java.util.Optional.empty();
 		
@@ -42,9 +54,9 @@ public class RutaService {
 		}
 	}
 	
-	public boolean delete(String nombre) {
+	public boolean delete(String id) {
 		
-		Optional<Ruta> ruta = getUsuarioByNombre(nombre);
+		Optional<Ruta> ruta = getUsuarioById(id);
 		
 		if(!ruta.equals(Optional.empty())){
 			repo.deleteById(ruta.get().getId());
@@ -56,7 +68,7 @@ public class RutaService {
 	
 	public boolean update(Ruta ruta) {
 
-		Optional<Ruta> vruta = getUsuarioByNombre(ruta.getNombre());
+		Optional<Ruta> vruta = getUsuarioById(ruta.getId());
 		
 		if(!vruta.equals(Optional.empty())){
 			repo.save(ruta);

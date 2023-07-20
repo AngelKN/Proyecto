@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.proyect.service.models.Parada;
 
-@FeignClient(name = "ServicioParada", url = "http://localhost:9993")
+@FeignClient(name = "ServicioParada")
 @RequestMapping("/parada")
 public interface ParadaFeignClient {
 
@@ -30,10 +30,14 @@ public interface ParadaFeignClient {
 	public List<Parada> findAll();
 	
 	//BUSCAR PARADA
-	@GetMapping("/find/{nombre}")
-	public Optional<Parada> findParada(@PathVariable("nombre") String ubicacion);
+	@GetMapping("/find/{id}")
+	public Optional<Parada> findParada(@PathVariable("id") String id);
 	
 	//ELIMINAR PARADA
-	@DeleteMapping("/delete/{nombre}")
-	public String delete(@PathVariable("nombre") String ubicacion);
+	@DeleteMapping("/delete/{id}")
+	public String delete(@PathVariable("id") String id);
+	
+	//PARADAS POR RUTA
+	@GetMapping("/id_ruta/{id}")
+	public List<Parada> paradasRuta(@PathVariable("id") String id);
 }

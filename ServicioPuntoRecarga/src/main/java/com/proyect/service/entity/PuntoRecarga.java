@@ -50,4 +50,6 @@ public class PuntoRecarga {
 	public void setMapa(String mapa) {
 		this.mapa = mapa;
 	}
+	
+	
 }

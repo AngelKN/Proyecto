@@ -32,9 +32,9 @@ public class RutaController {
 		return service.getAll();
 	}
 	
-	@GetMapping("/find/{nombre}")
-	public Optional<Ruta> findById(@PathVariable("nombre") String nombre){
-		Optional<Ruta> ruta = service.getUsuarioByNombre(nombre);
+	@GetMapping("/find/{id}")
+	public Optional<Ruta> findById(@PathVariable("id") String id){
+		Optional<Ruta> ruta = service.getUsuarioById(id);
 		if(ruta != null) {
 			return ruta; 
 		}else {
@@ -51,9 +51,9 @@ public class RutaController {
 		}
 	}
 	
-	@DeleteMapping("/delete/{nombre}")
-	public String delete(@PathVariable("nombre") String nombre) {
-		if(service.delete(nombre)) {
+	@DeleteMapping("/delete/{id}")
+	public String delete(@PathVariable("id") String id) {
+		if(service.delete(id)) {
 			return "eliminado";
 		}else {
 			return "no existe";

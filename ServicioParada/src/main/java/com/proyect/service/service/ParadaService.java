@@ -1,5 +1,6 @@
 package com.proyect.service.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,11 +20,11 @@ public class ParadaService {
 		return repo.findAll();
 	}
 	
-	public Optional<Parada> getUsuarioByNombre(String nombre){
+	public Optional<Parada> getUsuarioByUbicacion(String ubicacion){
 		Optional<Parada> parada = java.util.Optional.empty();
 		
 		for(Parada item :repo.findAll()) {
-			if(item.getUbicacion().equals(nombre)) {
+			if(item.getUbicacion().equals(ubicacion)) {
 				parada = repo.findById(item.getId());
 			}
 		}
@@ -31,8 +32,20 @@ public class ParadaService {
 		return parada;	
 	}
 	
+	public Optional<Parada> getUsuarioById(String id){
+		Optional<Parada> parada = repo.findById(id);
+		
+		/*for(Ruta item :repo.findAll()) {
+			if(item.getNombre().equals(nombre)) {
+				ruta = repo.findById(item.getId());
+			}
+		}*/
+		
+		return parada;	
+	}
+	
 	public boolean save(Parada parada) {
-		Optional<Parada> vparada = getUsuarioByNombre(parada.getUbicacion());
+		Optional<Parada> vparada = getUsuarioByUbicacion(parada.getUbicacion());
 		
 		if(vparada.equals(Optional.empty())){
 			repo.save(parada);
@@ -42,9 +55,9 @@ public class ParadaService {
 		}
 	}
 	
-	public boolean delete(String nombre) {
+	public boolean delete(String id) {
 		
-		Optional<Parada> parada = getUsuarioByNombre(nombre);
+		Optional<Parada> parada = getUsuarioById(id);
 		
 		if(!parada.equals(Optional.empty())){
 			repo.deleteById(parada.get().getId());
@@ -56,7 +69,7 @@ public class ParadaService {
 	
 	public boolean update(Parada parada) {
 
-		Optional<Parada> vparada = getUsuarioByNombre(parada.getUbicacion());
+		Optional<Parada> vparada = getUsuarioById(parada.getId());
 		
 		if(!vparada.equals(Optional.empty())){
 			repo.save(parada);
@@ -64,5 +77,23 @@ public class ParadaService {
 		}else {
 			return false;
 		}
+	}
+	
+	//PARADAS POR ID_RUTA
+	public List<Parada> paradasRuta(String id_ruta){
+		List<Parada> parada = new ArrayList<Parada>();
+		Parada par = new Parada();
+		
+		for(Parada item :repo.findAll()) {
+			if(item.getId_ruta().equals(id_ruta)) {
+				par.setId(item.getId());
+				par.setUbicacion(item.getUbicacion());
+				par.setMapa(item.getMapa());
+				par.setId_ruta(item.getId_ruta());
+				parada.add(par);
+			}
+		}
+		
+		return parada;
 	}
 }

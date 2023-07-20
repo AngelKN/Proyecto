@@ -51,4 +51,6 @@ public class PuntoRecarga {
 		this.mapa = mapa;
 	}
 
+	
+
 }

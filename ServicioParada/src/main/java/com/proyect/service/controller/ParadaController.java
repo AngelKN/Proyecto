@@ -32,9 +32,9 @@ public class ParadaController {
 		return service.getAll();
 	}
 	
-	@GetMapping("/find/{nombre}")
-	public Optional<Parada> findById(@PathVariable("nombre") String ubicacion){
-		Optional<Parada> parada = service.getUsuarioByNombre(ubicacion);
+	@GetMapping("/find/{id}")
+	public Optional<Parada> findById(@PathVariable("id") String id){
+		Optional<Parada> parada = service.getUsuarioById(id);
 		if(parada != null) {
 			return parada; 
 		}else {
@@ -51,9 +51,9 @@ public class ParadaController {
 		}
 	}
 	
-	@DeleteMapping("/delete/{nombre}")
-	public String delete(@PathVariable("nombre") String ubicacion) {
-		if(service.delete(ubicacion)) {
+	@DeleteMapping("/delete/{id}")
+	public String delete(@PathVariable("id") String id) {
+		if(service.delete(id)) {
 			return "eliminado";
 		}else {
 			return "no existe";
@@ -68,5 +68,10 @@ public class ParadaController {
 		}else {
 			return "no exciste";
 		}
+	}
+	
+	@GetMapping("/id_ruta/{id}")
+	public List<Parada> paradasRuta(@PathVariable("id") String id_ruta){
+		return service.paradasRuta(id_ruta);
 	}
 }

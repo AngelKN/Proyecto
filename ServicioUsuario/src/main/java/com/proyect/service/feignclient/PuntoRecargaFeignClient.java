@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.proyect.service.models.Parada;
 import com.proyect.service.models.PuntoRecarga;
 
-@FeignClient(name = "ServicioPuntoRecarga", url = "http://localhost:9992")
+@FeignClient(name = "ServicioPuntoRecarga")
 @RequestMapping("/punto")
 public interface PuntoRecargaFeignClient {
 
@@ -30,10 +31,10 @@ public interface PuntoRecargaFeignClient {
 	public List<PuntoRecarga> findAll();
 	
 	//BUSCAR PARADA
-	@GetMapping("/find/{nombre}")
-	public Optional<PuntoRecarga> findPunto(@PathVariable("nombre") String ubicacion);
+	@GetMapping("/find/{id}")
+	public Optional<PuntoRecarga> findPunto(@PathVariable("id") String id);
 	
 	//ELIMINAR PARADA
-	@DeleteMapping("/delete/{nombre}")
-	public String delete(@PathVariable("nombre") String ubicacion);
+	@DeleteMapping("/delete/{id}")
+	public String delete(@PathVariable("id") String id);
 }

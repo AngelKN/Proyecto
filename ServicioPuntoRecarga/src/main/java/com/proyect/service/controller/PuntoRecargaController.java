@@ -33,9 +33,9 @@ public class PuntoRecargaController {
 		return service.getAll();
 	}
 	
-	@GetMapping("/find/{nombre}")
-	public Optional<PuntoRecarga> findById(@PathVariable("nombre") String nombre){
-		Optional<PuntoRecarga> pr = service.getUsuarioByNombre(nombre);
+	@GetMapping("/find/{id}")
+	public Optional<PuntoRecarga> findById(@PathVariable("id") String id){
+		Optional<PuntoRecarga> pr = service.getUsuarioById(id);
 		if(pr != null) {
 			return pr; 
 		}else {
@@ -52,9 +52,9 @@ public class PuntoRecargaController {
 		}
 	}
 	
-	@DeleteMapping("/delete/{nombre}")
-	public String delete(@PathVariable("nombre") String nombre) {
-		if(service.delete(nombre)) {
+	@DeleteMapping("/delete/{id}")
+	public String delete(@PathVariable("id") String id) {
+		if(service.delete(id)) {
 			return "eliminado";
 		}else {
 			return "no existe";

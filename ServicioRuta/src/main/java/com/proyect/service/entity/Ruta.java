@@ -1,6 +1,5 @@
 package com.proyect.service.entity;
 
-import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -11,9 +10,10 @@ public class Ruta {
 	@Id
 	private String id;
 	private String nombre;
+	private String descripcion;
+	private double precio;
+	private String foto;
 	private String tipo;
-	private List<String> paradas;
-	private List<String> puntorecarga;
 	
 	public Ruta() {
 		super();
@@ -30,6 +30,22 @@ public class Ruta {
 	public String getNombre() {
 		return nombre;
 	}
+	
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
@@ -43,19 +59,13 @@ public class Ruta {
 		this.tipo = tipo;
 	}
 
-	public List<String> getParadas() {
-		return paradas;
+	public double getPrecio() {
+		return precio;
 	}
 
-	public void setParadas(List<String> paradas) {
-		this.paradas = paradas;
+	public void setPrecio(double precio) {
+		this.precio = precio;
 	}
-
-	public List<String> getPuntorecarga() {
-		return puntorecarga;
-	}
-
-	public void setPuntorecarga(List<String> puntorecarga) {
-		this.puntorecarga = puntorecarga;
-	}
+	
+	
 }

@@ -14,27 +14,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.proyect.service.models.PuntoRecarga;
 import com.proyect.service.models.Ruta;
 
-@FeignClient(name = "ServicioRuta", url = "http://localhost:9994")
+@FeignClient(name = "ServicioRuta")
 @RequestMapping("/ruta")
 public interface RutaFeignClient {
 	
 	//NUEVA RUTA
 	@PostMapping("/save")
-	public String save(@RequestBody Ruta pr);
+	public String save(@RequestBody Ruta ruta);
 	
 	//ACTUALIZAR RUTA
 	@GetMapping("/update")
-	public String update(@RequestBody Ruta pr);
+	public String update(@RequestBody Ruta ruta);
 	
 	//LISTA DE RUTAS
 	@GetMapping("/all")
 	public List<Ruta> findAll();
 	
 	//BUSCAR RUTA
-	@GetMapping("/find/{nombre}")
-	public Optional<Ruta> findRuta(@PathVariable("nombre") String ubicacion);
+	@GetMapping("/find/{id}")
+	public Optional<Ruta> findRuta(@PathVariable("id") String id);
 	
 	//ELIMINAR RUTA
-	@DeleteMapping("/delete/{nombre}")
-	public String delete(@PathVariable("nombre") String ubicacion);
+	@DeleteMapping("/delete/{id}")
+	public String delete(@PathVariable("id") String id);
 }
