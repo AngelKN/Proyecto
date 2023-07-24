@@ -16,7 +16,7 @@ import com.proyect.service.entity.Cupo;
 import com.proyect.service.service.CupoService;
 
 @RestController
-@RequestMapping("/parada")
+@RequestMapping("/cupo")
 public class CupoController {
 
 	@Autowired
@@ -70,7 +70,7 @@ public class CupoController {
 		}
 	}
 	
-	@GetMapping("/id_ruta/{id}")
+	@GetMapping("/id_user/{id}")
 	public List<Cupo> paradasRuta(@PathVariable("id") String id_user){
 		return service.paradasRuta(id_user);
 	}
