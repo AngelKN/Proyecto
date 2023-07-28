@@ -1,5 +1,6 @@
 package com.proyect.service.models;
 
+import java.util.List;
 
 public class Ruta {
 
@@ -9,6 +10,7 @@ public class Ruta {
 	private double precio;
 	private String foto;
 	private String tipo;
+	private List<String> paradas;
 	
 	public Ruta() {
 		super();
@@ -62,5 +64,11 @@ public class Ruta {
 		this.precio = precio;
 	}
 	
-	
+	public List<String> getParadas() {
+		return paradas;
+	}
+
+	public void setParadas(List<String> paradas) {
+		this.paradas = paradas;
+	}
 }

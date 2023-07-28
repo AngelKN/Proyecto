@@ -13,12 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.proyect.service.entity.Usuario;
+import com.proyect.service.models.Cupo;
 import com.proyect.service.models.Parada;
-import com.proyect.service.models.PuntoRecarga;
-import com.proyect.service.models.Ruta;
-import com.proyect.service.service.ParadaService;
-import com.proyect.service.service.PuntoRecargaService;
-import com.proyect.service.service.RutaService;
 import com.proyect.service.service.UsuarioService;
 
 @RestController
@@ -99,6 +95,10 @@ public class UsuarioController {
 		return service.paradasRuta(id);
 	}
 	
-	
+	//CUPO POR USUARIO
+	@GetMapping("/cupouser/{id}")
+	public List<Cupo> cupoUser(@PathVariable("id") String id){
+		return service.cupoUser(id);
+	}
 	
 }

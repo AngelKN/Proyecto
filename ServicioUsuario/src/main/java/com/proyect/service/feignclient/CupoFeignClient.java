@@ -39,5 +39,5 @@ public interface CupoFeignClient {
 	
 	//PARADAS POR USER
 	@GetMapping("/id_user/{id}")
-	public List<Cupo> paradasRuta(@PathVariable("id") String id);
+	public List<Cupo> cupoUser(@PathVariable("id") String id);
 }

@@ -1,12 +1,15 @@
 package com.proyect.service.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.proyect.service.feignclient.ParadaFeignClient;
 import com.proyect.service.feignclient.RutaFeignClient;
+import com.proyect.service.models.Parada;
 import com.proyect.service.models.Ruta;
 
 @Service
@@ -15,6 +18,9 @@ public class RutaService {
 
 	@Autowired
 	private RutaFeignClient fei;
+	
+	@Autowired
+	private ParadaFeignClient feipa;
 	
 	//RUTA
 	//--------------------------------------------------------------------
@@ -46,5 +52,18 @@ public class RutaService {
 	public String deleteRuta(String id){
 		String eliminar = fei.delete(id);
 		return eliminar;
+	}
+	
+	//paradasrutas
+	public List<Parada> pararuta(String id){
+		List<Parada> paradasRuta = new ArrayList<Parada>();
+		
+		Optional<Ruta> ruta = fei.findRuta(id);
+		
+		for(String item :ruta.get().getParadas()) {
+			paradasRuta.add(feipa.findParada(item).get());
+		}
+		
+		return paradasRuta;
 	}
 }

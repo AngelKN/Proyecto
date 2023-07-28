@@ -71,7 +71,7 @@ public class CupoController {
 	}
 	
 	@GetMapping("/id_user/{id}")
-	public List<Cupo> paradasRuta(@PathVariable("id") String id_user){
-		return service.paradasRuta(id_user);
+	public List<Cupo> cupoUser(@PathVariable("id") String id_user){
+		return service.cupoUser(id_user);
 	}
 }

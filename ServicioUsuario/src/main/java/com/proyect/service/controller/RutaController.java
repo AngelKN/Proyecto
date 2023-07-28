@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.proyect.service.models.Parada;
 import com.proyect.service.models.Ruta;
 import com.proyect.service.service.RutaService;
 
@@ -55,6 +56,11 @@ public class RutaController {
 	public String deleteRuta(@PathVariable("id") String id){
 		String eliminar = serviceR.deleteRuta(id);
 		return eliminar;
+	}
+	
+	@GetMapping("/paradasruta/{id}")
+	public List<Parada> paradasRuta(@PathVariable("id") String id) {
+		return serviceR.pararuta(id);
 	}
 
 }

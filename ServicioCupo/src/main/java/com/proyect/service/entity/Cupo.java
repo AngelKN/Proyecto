@@ -8,7 +8,7 @@ public class Cupo {
 
 	@Id
 	private String id;
-	private String precio;
+	private double precio;
 	private String hora_llegada;
 	private String hora_salida;
 	private String descripcion;
@@ -22,10 +22,10 @@ public class Cupo {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getPrecio() {
+	public double getPrecio() {
 		return precio;
 	}
-	public void setPrecio(String precio) {
+	public void setPrecio(double precio) {
 		this.precio = precio;
 	}
 	public String getHora_llegada() {

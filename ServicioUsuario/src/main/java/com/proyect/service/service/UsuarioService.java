@@ -1,26 +1,23 @@
 package com.proyect.service.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import com.proyect.service.entity.Usuario;
 import com.proyect.service.feignclient.ParadaFeignClient;
-import com.proyect.service.feignclient.PuntoRecargaFeignClient;
 import com.proyect.service.feignclient.RutaFeignClient;
+import com.proyect.service.feignclient.CupoFeignClient;
+import com.proyect.service.models.Cupo;
 import com.proyect.service.models.Parada;
-import com.proyect.service.models.PuntoRecarga;
 import com.proyect.service.models.Ruta;
 import com.proyect.service.repository.UsuarioRepository;
 
 @Service
 public class UsuarioService {
-	
-	@Autowired
-	private RestTemplate rest;
 	
 	@Autowired
 	private UsuarioRepository repo;
@@ -29,10 +26,10 @@ public class UsuarioService {
 	private ParadaFeignClient feipa;
 	
 	@Autowired
-	private PuntoRecargaFeignClient feipr;
+	private CupoFeignClient feic;
 	
 	@Autowired
-	private RutaFeignClient feiru;
+	private RutaFeignClient feir;
 	
 	//USUARIO
 	//--------------------------------------------------------------------
@@ -121,6 +118,12 @@ public class UsuarioService {
 	public List<Parada> paradasRuta(String id){
 		List<Parada> paradas = feipa.paradasRuta(id);
 		return paradas;
+	}
+	
+	//CUPOS POR USUARIO
+	public List<Cupo> cupoUser(String id){
+		List<Cupo> cupo = feic.cupoUser(id);
+		return cupo;
 	}
 	
 }

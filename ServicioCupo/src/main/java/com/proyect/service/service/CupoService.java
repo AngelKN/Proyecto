@@ -20,11 +20,11 @@ public class CupoService {
 		return repo.findAll();
 	}
 	
-	public Optional<Cupo> getCupoByUbicacion(String precio){
+	public Optional<Cupo> getCupoByUbicacion(double precio){
 		Optional<Cupo> cupo = java.util.Optional.empty();
 		
 		for(Cupo item :repo.findAll()) {
-			if(item.getPrecio().equals(precio)) {
+			if(item.getPrecio() == precio) {
 				cupo = repo.findById(item.getId());
 			}
 		}
@@ -70,17 +70,18 @@ public class CupoService {
 	}
 	
 	//CUPOS POR ID_USER
-	public List<Cupo> paradasRuta(String id_user){
+	public List<Cupo> cupoUser(String id_user){
 		List<Cupo> cupo = new ArrayList<Cupo>();
 		Cupo par = new Cupo();
 		
 		for(Cupo item :repo.findAll()) {
-			if(item.getId_user().equals(id_user)) {
+			if(item.getId_user().equalsIgnoreCase(id_user)) {
 				par.setId(item.getId());
 				par.setPrecio(item.getPrecio());
 				par.setHora_llegada(item.getHora_llegada());
 				par.setHora_salida(item.getHora_salida());
 				par.setDescripcion(item.getDescripcion());
+				par.setId_user(item.getId_user());
 				cupo.add(par);
 			}
 		}
