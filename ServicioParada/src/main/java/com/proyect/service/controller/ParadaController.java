@@ -69,9 +69,4 @@ public class ParadaController {
 			return "no exciste";
 		}
 	}
-	
-	@GetMapping("/id_ruta/{id}")
-	public List<Parada> paradasRuta(@PathVariable("id") String id_ruta){
-		return service.paradasRuta(id_ruta);
-	}
 }

@@ -36,8 +36,4 @@ public interface ParadaFeignClient {
 	//ELIMINAR PARADA
 	@DeleteMapping("/delete/{id}")
 	public String delete(@PathVariable("id") String id);
-	
-	//PARADAS POR RUTA
-	@GetMapping("/id_ruta/{id}")
-	public List<Parada> paradasRuta(@PathVariable("id") String id);
 }

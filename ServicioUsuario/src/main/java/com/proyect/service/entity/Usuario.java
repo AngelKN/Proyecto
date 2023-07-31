@@ -19,6 +19,8 @@ public class Usuario {
 
 	private String contraseña;
 
+	private String rol;
+	
 	public Usuario() {
 		super();
 	}
@@ -70,6 +72,15 @@ public class Usuario {
 	public void setContraseña(String contraseña) {
 		this.contraseña = contraseña;
 	}
+
+	public String getRol() {
+		return rol;
+	}
+
+	public void setRol(String rol) {
+		this.rol = rol;
+	}
+	
 	
 	
 }

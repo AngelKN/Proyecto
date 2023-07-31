@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.proyect.service.entity.Usuario;
 import com.proyect.service.models.Cupo;
-import com.proyect.service.models.Parada;
 import com.proyect.service.service.UsuarioService;
 
 @RestController
@@ -87,12 +86,6 @@ public class UsuarioController {
 		}else {
 			return null;
 		}
-	}
-	
-	//PARADAS POR RUTA
-	@GetMapping("/paradaruta/{id}")
-	public List<Parada> paradasRuta(@PathVariable("id") String id){
-		return service.paradasRuta(id);
 	}
 	
 	//CUPO POR USUARIO

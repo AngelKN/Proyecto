@@ -1,6 +1,5 @@
 package com.proyect.service.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,12 +33,6 @@ public class ParadaService {
 	
 	public Optional<Parada> getUsuarioById(String id){
 		Optional<Parada> parada = repo.findById(id);
-		
-		/*for(Ruta item :repo.findAll()) {
-			if(item.getNombre().equals(nombre)) {
-				ruta = repo.findById(item.getId());
-			}
-		}*/
 		
 		return parada;	
 	}
@@ -77,23 +70,5 @@ public class ParadaService {
 		}else {
 			return false;
 		}
-	}
-	
-	//PARADAS POR ID_RUTA
-	public List<Parada> paradasRuta(String id_ruta){
-		List<Parada> parada = new ArrayList<Parada>();
-		Parada par = new Parada();
-		
-		for(Parada item :repo.findAll()) {
-			if(item.getId_ruta().equals(id_ruta)) {
-				par.setId(item.getId());
-				par.setUbicacion(item.getUbicacion());
-				par.setMapa(item.getMapa());
-				par.setId_ruta(item.getId_ruta());
-				parada.add(par);
-			}
-		}
-		
-		return parada;
 	}
 }
