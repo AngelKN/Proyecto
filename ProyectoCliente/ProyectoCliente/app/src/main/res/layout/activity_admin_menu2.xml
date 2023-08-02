@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/black"
+    tools:context=".admin.AdminMenu">
+    <include layout="@layout/toolbar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnVerRutas"
+            android:layout_width="181dp"
+            android:layout_height="76dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/back_login"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/verRutas"
+            android:textAllCaps="true"
+            android:textColor="#BAA7A7"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/btnVerParadas"
+            android:layout_width="181dp"
+            android:layout_height="76dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/back_login"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/verParadas"
+            android:textAllCaps="true"
+            android:textColor="#BAA7A7"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnVerPuntosRecarga"
+            android:layout_width="181dp"
+            android:layout_height="76dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/back_login"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/verPuntosRecarga"
+            android:textAllCaps="true"
+            android:textColor="#BAA7A7"
+            android:textSize="16sp" />
+        <Button
+            android:id="@+id/btnVerUsuarios"
+            android:layout_width="181dp"
+            android:layout_height="76dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/back_login"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/verUsuarios"
+            android:textAllCaps="true"
+            android:textColor="#BAA7A7"
+            android:textSize="16sp" />
+    </LinearLayout>
+    <Button
+        android:id="@+id/btnVerCupos"
+        android:layout_width="181dp"
+        android:layout_height="76dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/back_login"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="@string/verCupos"
+        android:textAllCaps="true"
+        android:textColor="#BAA7A7"
+        android:textSize="16sp" />
+</LinearLayout>
