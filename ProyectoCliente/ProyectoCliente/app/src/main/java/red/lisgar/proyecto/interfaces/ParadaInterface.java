@@ -29,6 +29,6 @@ public interface ParadaInterface {
     Call<String> update(@Body Parada u);
 
     @DELETE("deleteparada/{id}")
-    Call<Parada> delete(@Path("id") String id);
+    Call<String> delete(@Path("id") String id);
 
 }

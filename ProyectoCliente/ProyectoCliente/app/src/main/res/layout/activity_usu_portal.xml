@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"
-        android:text="@string/verCupos"
+        android:text="Publicaciones"
         android:textColor="#8da000"
         android:textSize="24sp" />
 

@@ -15,6 +15,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import red.lisgar.proyecto.constants.Intents;
 import red.lisgar.proyecto.R;
 import red.lisgar.proyecto.constants.urlDeLaApi;
@@ -179,7 +182,6 @@ public class AdminActualizarUsuarioActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 eliminar(id);
                                 limpiar();
-                                inte.adminUsers();
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -241,9 +243,12 @@ public class AdminActualizarUsuarioActivity extends AppCompatActivity {
 
     private void editar(Usuario u)
     {
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(urlDeLaApi.URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         interfaces = retrofit.create(UsuarioInterface.class);
         Call<String> call = interfaces.update(u);
@@ -282,15 +287,18 @@ public class AdminActualizarUsuarioActivity extends AppCompatActivity {
 
     private void eliminar(String id)
     {
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(urlDeLaApi.URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         interfaces = retrofit.create(UsuarioInterface.class);
-        Call<Usuario> call = interfaces.delete(id);
-        call.enqueue(new Callback<Usuario>() {
+        Call<String> call = interfaces.delete(id);
+        call.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+            public void onResponse(Call<String> call, Response<String> response) {
                 if(!response.isSuccessful())
                 {
                     Toast toast = Toast.makeText(getApplication(), response.message(), Toast.LENGTH_LONG);
@@ -298,9 +306,9 @@ public class AdminActualizarUsuarioActivity extends AppCompatActivity {
                     Log.e("err: ",response.message());
                     return;
                 }
-                Usuario ver = response.body();
+                String ver = response.body();
 
-                if(ver != null){
+                if(ver.equals("eliminado")){
                     limpiar();
                     inte.adminUsers();
                 }else{
@@ -311,7 +319,7 @@ public class AdminActualizarUsuarioActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Usuario> call, Throwable t) {
+            public void onFailure(Call<String> call, Throwable t) {
                 Toast toast = Toast.makeText(getApplication(), t.getMessage(), Toast.LENGTH_LONG);
                 toast.show();
                 Log.e("err: ", t.getMessage());

@@ -78,6 +78,8 @@ public class MisPublicacionesActivity extends AppCompatActivity implements Searc
 
         buscadorAdminDispon.setOnQueryTextListener(this);
 
+
+
         //MENU POPUP
         btnMas.setOnClickListener(new View.OnClickListener() {
             @Override

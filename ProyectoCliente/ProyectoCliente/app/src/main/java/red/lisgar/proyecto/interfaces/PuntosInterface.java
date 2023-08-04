@@ -29,5 +29,5 @@ public interface PuntosInterface {
     Call<String> update(@Body PuntoRecarga u);
 
     @DELETE("deletepunto/{id}")
-    Call<PuntoRecarga> delete(@Path("id") String id);
+    Call<String> delete(@Path("id") String id);
 }

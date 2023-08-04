@@ -17,6 +17,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -243,7 +246,6 @@ public class AdminActualizarRutaActivity extends AppCompatActivity {
                     ruta.setParadas(listId);
                     editar(ruta);
                     limpiar();
-                    inte.adminRutas();
                 }else {
                     Toast.makeText(AdminActualizarRutaActivity.this, "Rellene todos los campos", Toast.LENGTH_LONG).show();
                 }
@@ -263,7 +265,6 @@ public class AdminActualizarRutaActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 eliminar(id);
                                 limpiar();
-                                inte.adminRutas();
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -393,9 +394,12 @@ public class AdminActualizarRutaActivity extends AppCompatActivity {
 
     private void editar(Ruta u)
     {
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(urlDeLaApi.URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         interfaces = retrofit.create(RutaInterface.class);
         Call<String> call = interfaces.update(u);
@@ -414,6 +418,7 @@ public class AdminActualizarRutaActivity extends AppCompatActivity {
                 if(save.equals("guardado")){
                     Toast toast = Toast.makeText(getApplication(), "REGISTRO SATISFACTORIO", Toast.LENGTH_LONG);
                     toast.show();
+                    inte.adminRutas();
                 }else{
                     Toast toast = Toast.makeText(getApplication(), "EL CORREO SE ENCUENTRA EN USO", Toast.LENGTH_LONG);
                     toast.show();
@@ -433,15 +438,18 @@ public class AdminActualizarRutaActivity extends AppCompatActivity {
 
     private void eliminar(String id)
     {
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(urlDeLaApi.URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         interfaces = retrofit.create(RutaInterface.class);
-        Call<Ruta> call = interfaces.delete(id);
-        call.enqueue(new Callback<Ruta>() {
+        Call<String> call = interfaces.delete(id);
+        call.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<Ruta> call, Response<Ruta> response) {
+            public void onResponse(Call<String> call, Response<String> response) {
                 if(!response.isSuccessful())
                 {
                     Toast toast = Toast.makeText(getApplication(), response.message(), Toast.LENGTH_LONG);
@@ -449,9 +457,9 @@ public class AdminActualizarRutaActivity extends AppCompatActivity {
                     Log.e("err: ",response.message());
                     return;
                 }
-                Ruta ver = response.body();
+                String ver = response.body();
 
-                if(ver != null){
+                if(ver.equals("eliminado")){
                     limpiar();
                     inte.adminRutas();
                 }else{
@@ -462,7 +470,7 @@ public class AdminActualizarRutaActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Ruta> call, Throwable t) {
+            public void onFailure(Call<String> call, Throwable t) {
                 Toast toast = Toast.makeText(getApplication(), t.getMessage(), Toast.LENGTH_LONG);
                 toast.show();
                 Log.e("err: ", t.getMessage());

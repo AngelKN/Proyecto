@@ -10,6 +10,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,6 +34,7 @@ public class SigninActivity extends AppCompatActivity {
     EditText txtTelefono;
     EditText txtDireccion;
     EditText txtContrasena;
+    EditText txtContrasena2;
     Button btnRegistrarse;
     Button btnIniciarSesion;
     Usuario usuario;
@@ -47,6 +51,7 @@ public class SigninActivity extends AppCompatActivity {
         txtTelefono = findViewById(R.id.txtTelefono);
         txtDireccion = findViewById(R.id.txtDireccion);
         txtContrasena = findViewById(R.id.txtContrasena);
+        txtContrasena2 = findViewById(R.id.txtContrasena2);
         btnRegistrarse = findViewById(R.id.btnRegistrarse);
         btnIniciarSesion = findViewById(R.id.btnIniciarSesion);
         sHarePreference = new SharePreference(this);
@@ -60,28 +65,33 @@ public class SigninActivity extends AppCompatActivity {
                 String Telefono = txtTelefono.getText().toString().trim().toLowerCase();
                 String Direccion = txtDireccion.getText().toString().trim().toLowerCase();
                 String Contrasena = txtContrasena.getText().toString().trim();
+                String Contrasena2 = txtContrasena2.getText().toString().trim();
 
                 //OBLIGATORIEDAD DE TODOS LOS CAMPOS
                 if (!TextUtils.isEmpty(Correo) && !TextUtils.isEmpty(Telefono) && !TextUtils.isEmpty(Direccion) && !TextUtils.isEmpty(Contrasena)) {
-
                     if(validarCorreo(Correo)){
                         //EL TELEFONO DEBE TENER 10 CARACTERES
                         if (Telefono.length()==10) {
-                            //SE REGISTRA
-                            //dbUsuarios = new DbUsuarios(SigninActivity.this);
-                            usuario.setNombre(Nombre);
-                            usuario.setCorreo(Correo);
-                            usuario.setTelefono(Telefono);
-                            usuario.setDireccion(Direccion);
-                            usuario.setContraseña(Contrasena);
-                            usuario.setRol("USER");
-                            limpiar();
-                            registrar(usuario);
-                            inte.Main();
+                            if(Contrasena.equals(Contrasena2)){
+                                //SE REGISTRA
+                                usuario.setNombre(Nombre);
+                                usuario.setCorreo(Correo);
+                                usuario.setTelefono(Telefono);
+                                usuario.setDireccion(Direccion);
+                                usuario.setContraseña(Contrasena);
+                                usuario.setRol("USER");
+                                limpiar();
+                                correo(Correo, usuario);
+                            }else{
+                                txtContrasena2.setText("");
+                                Toast.makeText(SigninActivity.this, "Las contraseñas no concuerdan", Toast.LENGTH_LONG).show();
+                            }
                         } else {
+                            txtTelefono.setText("");
                             Toast.makeText(SigninActivity.this, "El telefono debe tener 10 caracteres", Toast.LENGTH_LONG).show();
                         }
                     }else{
+                        txtCorreosignin.setText("");
                         Toast.makeText(SigninActivity.this, "Debe contener un correo valido", Toast.LENGTH_LONG).show();
                     }
                 } else {
@@ -107,9 +117,13 @@ public class SigninActivity extends AppCompatActivity {
 
     private void registrar(Usuario u)
     {
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(urlDeLaApi.URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         interfaces = retrofit.create(UsuarioInterface.class);
         Call<String> call = interfaces.save(u);
@@ -128,6 +142,7 @@ public class SigninActivity extends AppCompatActivity {
                 if(save.equals("guardado")){
                     Toast toast = Toast.makeText(getApplication(), "REGISTRO SATISFACTORIO", Toast.LENGTH_LONG);
                     toast.show();
+                    inte.Main();
                 }else{
                     Toast toast = Toast.makeText(getApplication(), "EL CORREO SE ENCUENTRA EN USO", Toast.LENGTH_LONG);
                     toast.show();
@@ -144,11 +159,50 @@ public class SigninActivity extends AppCompatActivity {
         });
     }
 
+    private void correo(String u, Usuario user)
+    {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(urlDeLaApi.URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        interfaces = retrofit.create(UsuarioInterface.class);
+        Call<Usuario> call = interfaces.getOneCorreo(u);
+        call.enqueue(new Callback<Usuario>() {
+            @Override
+            public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                if(!response.isSuccessful())
+                {
+                    Toast toast = Toast.makeText(getApplication(), response.message(), Toast.LENGTH_LONG);
+                    toast.show();
+                    Log.e("err: ",response.message());
+                    return;
+                }
+                Usuario save = response.body();
+
+                if(save == null){
+                    registrar(user);
+                }else{
+                    Toast toast = Toast.makeText(getApplication(), "El correo ya se encuentra en uso", Toast.LENGTH_LONG);
+                    toast.show();
+                    limpiar();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Usuario> call, Throwable t) {
+                Toast toast = Toast.makeText(getApplication(), t.getMessage(), Toast.LENGTH_LONG);
+                toast.show();
+                Log.e("err: ", t.getMessage());
+            }
+        });
+    }
+
     private void limpiar(){
         txtNombre.setText("");
         txtCorreosignin.setText("");
         txtDireccion.setText("");
         txtContrasena.setText("");
+        txtContrasena2.setText("");
         txtTelefono.setText("");
     }
     @Override

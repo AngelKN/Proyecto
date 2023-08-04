@@ -15,6 +15,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -232,7 +235,6 @@ public class AdminAgregarRutaActivity extends AppCompatActivity {
                     ruta.setParadas(listId);
                     agregar(ruta);
                     limpiar();
-                    inte.adminRutas();
                 }else {
                     Toast.makeText(AdminAgregarRutaActivity.this, "Rellene todos los campos", Toast.LENGTH_LONG).show();
                 }
@@ -275,9 +277,12 @@ public class AdminAgregarRutaActivity extends AppCompatActivity {
 
     private void agregar(Ruta u)
     {
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(urlDeLaApi.URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         interfaces = retrofit.create(RutaInterface.class);
         Call<String> call = interfaces.save(u);
@@ -296,6 +301,7 @@ public class AdminAgregarRutaActivity extends AppCompatActivity {
                 if(save.equals("guardado")){
                     Toast toast = Toast.makeText(getApplication(), "REGISTRO SATISFACTORIO", Toast.LENGTH_LONG);
                     toast.show();
+                    inte.adminRutas();
                 }else{
                     Toast toast = Toast.makeText(getApplication(), "EL CORREO SE ENCUENTRA EN USO", Toast.LENGTH_LONG);
                     toast.show();

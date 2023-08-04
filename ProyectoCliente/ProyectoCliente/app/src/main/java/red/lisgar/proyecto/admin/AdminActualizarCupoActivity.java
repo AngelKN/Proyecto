@@ -15,6 +15,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import red.lisgar.proyecto.constants.Intents;
 import red.lisgar.proyecto.R;
 import red.lisgar.proyecto.constants.urlDeLaApi;
@@ -43,7 +46,7 @@ public class AdminActualizarCupoActivity extends AppCompatActivity {
     ImageView btnMas;
     SharePreference sHarePreference;
     ImageView imgBarra;
-    Cupo cupo;
+    Cupo cupo = new Cupo();;
     CupoInterface interfaces;
     UsuarioInterface interfacesR;
     String id;
@@ -72,7 +75,6 @@ public class AdminActualizarCupoActivity extends AppCompatActivity {
         btnActualizarCupo = findViewById(R.id.btnActualizarCupo);
         btnEliminarCupo = findViewById(R.id.btnEliminarCupo);
 
-        cupo = new Cupo();
         //TOOLBAR
         sHarePreference = new SharePreference(this);
         rolToolbar = findViewById(R.id.rolToolbar);
@@ -154,7 +156,6 @@ public class AdminActualizarCupoActivity extends AppCompatActivity {
                     cupo.setDescripcion(descripcion);
                     editar(cupo);
                     limpiar();
-                    usu();
                 }else {
                     Toast.makeText(AdminActualizarCupoActivity.this, "Rellene todos los campos", Toast.LENGTH_LONG).show();
                 }
@@ -173,7 +174,6 @@ public class AdminActualizarCupoActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 eliminar(id);
                                 limpiar();
-                                usu();
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -253,6 +253,7 @@ public class AdminActualizarCupoActivity extends AppCompatActivity {
                     horaIActualizarCupo.setText(ver.getHora_llegada());
                     horaSActualizarCupo.setText(ver.getHora_salida());
                     descripcionActualizarCupo.setText(ver.getDescripcion());
+                    cupo.setId_user(ver.getId_user());
                     verUser(ver.getId_user());
                 }else{
                     Toast toast = Toast.makeText(getApplication(), "ERROR AL ENCONTRAR LA RUTA", Toast.LENGTH_LONG);
@@ -273,9 +274,13 @@ public class AdminActualizarCupoActivity extends AppCompatActivity {
 
     private void editar(Cupo u)
     {
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(urlDeLaApi.URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         interfaces = retrofit.create(CupoInterface.class);
         Call<String> call = interfaces.update(u);
@@ -296,7 +301,7 @@ public class AdminActualizarCupoActivity extends AppCompatActivity {
                     toast.show();
                     usu();
                 }else{
-                    Toast toast = Toast.makeText(getApplication(), "LA PARADA SE ENCUENTRA EN USO", Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(getApplication(), "LA PUBLICACION SE ENCUENTRA EN USO", Toast.LENGTH_LONG);
                     toast.show();
                     limpiar();
                 }
@@ -314,15 +319,18 @@ public class AdminActualizarCupoActivity extends AppCompatActivity {
 
     private void eliminar(String id)
     {
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(urlDeLaApi.URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         interfaces = retrofit.create(CupoInterface.class);
-        Call<Cupo> call = interfaces.delete(id);
-        call.enqueue(new Callback<Cupo>() {
+        Call<String> call = interfaces.delete(id);
+        call.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<Cupo> call, Response<Cupo> response) {
+            public void onResponse(Call<String> call, Response<String> response) {
                 if(!response.isSuccessful())
                 {
                     Toast toast = Toast.makeText(getApplication(), response.message(), Toast.LENGTH_LONG);
@@ -330,20 +338,22 @@ public class AdminActualizarCupoActivity extends AppCompatActivity {
                     Log.e("err: ",response.message());
                     return;
                 }
-                Cupo ver = response.body();
+                String ver = response.body();
 
-                if(ver != null){
+                if(ver.equals("eliminado")){
+                    Toast toast = Toast.makeText(getApplication(), "ELIMINADA CORRECTAMENTE", Toast.LENGTH_LONG);
+                    toast.show();
                     limpiar();
                     usu();
                 }else{
-                    Toast toast = Toast.makeText(getApplication(), "ERROR AL ELIMINAR LA PARADA", Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(getApplication(), "ERROR AL ELIMINAR LA PUBLICACION", Toast.LENGTH_LONG);
                     toast.show();
                 }
 
             }
 
             @Override
-            public void onFailure(Call<Cupo> call, Throwable t) {
+            public void onFailure(Call<String> call, Throwable t) {
                 Toast toast = Toast.makeText(getApplication(), t.getMessage(), Toast.LENGTH_LONG);
                 toast.show();
                 Log.e("err: ", t.getMessage());

@@ -15,6 +15,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import red.lisgar.proyecto.constants.Intents;
 import red.lisgar.proyecto.R;
 import red.lisgar.proyecto.constants.urlDeLaApi;
@@ -141,7 +144,6 @@ public class AdminActualizarPuntoActivity extends AppCompatActivity {
                     punto.setMapa(mapa);
                     editar(punto);
                     limpiar();
-                    inte.adminPuntos();
                 }else {
                     Toast.makeText(AdminActualizarPuntoActivity.this, "Rellene todos los campos", Toast.LENGTH_LONG).show();
                 }
@@ -161,7 +163,6 @@ public class AdminActualizarPuntoActivity extends AppCompatActivity {
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         eliminar(id);
                                         limpiar();
-                                        inte.adminPuntos();
                                     }
                                 })
                                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -220,9 +221,12 @@ public class AdminActualizarPuntoActivity extends AppCompatActivity {
 
     private void editar(PuntoRecarga u)
     {
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(urlDeLaApi.URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         interfaces = retrofit.create(PuntosInterface.class);
         Call<String> call = interfaces.update(u);
@@ -261,15 +265,18 @@ public class AdminActualizarPuntoActivity extends AppCompatActivity {
 
     private void eliminar(String id)
     {
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(urlDeLaApi.URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         interfaces = retrofit.create(PuntosInterface.class);
-        Call<PuntoRecarga> call = interfaces.delete(id);
-        call.enqueue(new Callback<PuntoRecarga>() {
+        Call<String> call = interfaces.delete(id);
+        call.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<PuntoRecarga> call, Response<PuntoRecarga> response) {
+            public void onResponse(Call<String> call, Response<String> response) {
                 if(!response.isSuccessful())
                 {
                     Toast toast = Toast.makeText(getApplication(), response.message(), Toast.LENGTH_LONG);
@@ -277,9 +284,9 @@ public class AdminActualizarPuntoActivity extends AppCompatActivity {
                     Log.e("err: ",response.message());
                     return;
                 }
-                PuntoRecarga ver = response.body();
+                String ver = response.body();
 
-                if(ver != null){
+                if(ver.equals("eliminado")){
                     limpiar();
                     inte.adminPuntos();
                 }else{
@@ -290,7 +297,7 @@ public class AdminActualizarPuntoActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<PuntoRecarga> call, Throwable t) {
+            public void onFailure(Call<String> call, Throwable t) {
                 Toast toast = Toast.makeText(getApplication(), t.getMessage(), Toast.LENGTH_LONG);
                 toast.show();
                 Log.e("err: ", t.getMessage());

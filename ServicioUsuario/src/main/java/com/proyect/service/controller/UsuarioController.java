@@ -45,6 +45,17 @@ public class UsuarioController {
 		}
 	}
 	
+	//BUSCAR USUARIO
+	@GetMapping("/findcorreo/{correo}")
+	public Optional<Usuario> findByCorreo(@PathVariable("correo") String correo){
+		Optional<Usuario> user = service.getUsuarioByCorre(correo);
+		if(user != null) {
+			return user; 
+		}else {
+			return Optional.empty();
+		}
+	}
+	
 	//NUEVO USUARIO
 	@PostMapping("/save")
 	public String save(@RequestBody Usuario user) {

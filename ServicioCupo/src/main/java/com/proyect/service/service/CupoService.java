@@ -58,15 +58,8 @@ public class CupoService {
 	}
 	
 	public boolean update(Cupo cupo) {
-
-		Optional<Cupo> vparada = getCupoById(cupo.getId());
-		
-		if(!vparada.equals(Optional.empty())){
 			repo.save(cupo);
 			return true;
-		}else {
-			return false;
-		}
 	}
 	
 	//CUPOS POR ID_USER

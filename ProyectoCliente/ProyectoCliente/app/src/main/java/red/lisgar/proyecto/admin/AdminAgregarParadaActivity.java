@@ -15,6 +15,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -134,7 +137,6 @@ public class AdminAgregarParadaActivity extends AppCompatActivity {
                     parada.setMapa(mapa);
                     agregar(parada);
                     limpiar();
-                    inte.adminParadas();
                 }else {
                     Toast.makeText(AdminAgregarParadaActivity.this, "Rellene todos los campos", Toast.LENGTH_LONG).show();
                 }
@@ -145,9 +147,12 @@ public class AdminAgregarParadaActivity extends AppCompatActivity {
 
     private void agregar(Parada u)
     {
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(urlDeLaApi.URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         interfaces = retrofit.create(ParadaInterface.class);
         Call<String> call = interfaces.save(u);

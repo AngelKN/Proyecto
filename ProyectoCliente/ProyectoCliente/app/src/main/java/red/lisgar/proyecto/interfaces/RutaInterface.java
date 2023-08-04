@@ -30,7 +30,7 @@ public interface RutaInterface {
     Call<String> update(@Body Ruta u);
 
     @DELETE("deleteruta/{id}")
-    Call<Ruta> delete(@Path("id") String id);
+    Call<String> delete(@Path("id") String id);
 
     @GET("paradasruta/{id}")
     Call<List<Parada>> findByParada(@Path("id") String id);

@@ -26,6 +26,9 @@ public interface UsuarioInterface {
     @GET("find/{id}")
     Call<Usuario> getOne(@Path("id") String id);
 
+    @GET("findcorreo/{correo}")
+    Call<Usuario> getOneCorreo(@Path("correo") String correo);
+
     @POST("save")
     Call<String> save(@Body Usuario u);
 
@@ -33,5 +36,5 @@ public interface UsuarioInterface {
     Call<String> update(@Body Usuario u);
 
     @DELETE("delete/{id}")
-    Call<Usuario> delete(@Path("id") String id);
+    Call<String> delete(@Path("id") String id);
 }

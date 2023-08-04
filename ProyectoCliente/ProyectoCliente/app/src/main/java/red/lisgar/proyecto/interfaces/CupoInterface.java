@@ -28,7 +28,7 @@ public interface CupoInterface {
     Call<String> update(@Body Cupo u);
 
     @DELETE("deletecupo/{id}")
-    Call<Cupo> delete(@Path("id") String id);
+    Call<String> delete(@Path("id") String id);
 
     @GET("cupouser/{id}")
     Call<List<Cupo>> findByRuta(@Path("id") String id);

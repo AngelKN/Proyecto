@@ -17,6 +17,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -145,7 +148,6 @@ public class AdminActualizarParadaActivity extends AppCompatActivity {
                     parada.setMapa(mapa);
                     editar(parada);
                     limpiar();
-                    inte.adminParadas();
                 }else {
                     Toast.makeText(AdminActualizarParadaActivity.this, "Rellene todos los campos", Toast.LENGTH_LONG).show();
                 }
@@ -165,7 +167,6 @@ public class AdminActualizarParadaActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 eliminar(id);
                                 limpiar();
-                                inte.adminParadas();
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -223,9 +224,13 @@ public class AdminActualizarParadaActivity extends AppCompatActivity {
 
     private void editar(Parada u)
     {
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(urlDeLaApi.URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         interfaces = retrofit.create(ParadaInterface.class);
         Call<String> call = interfaces.update(u);
@@ -264,15 +269,19 @@ public class AdminActualizarParadaActivity extends AppCompatActivity {
 
     private void eliminar(String id)
     {
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(urlDeLaApi.URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         interfaces = retrofit.create(ParadaInterface.class);
-        Call<Parada> call = interfaces.delete(id);
-        call.enqueue(new Callback<Parada>() {
+        Call<String> call = interfaces.delete(id);
+        call.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<Parada> call, Response<Parada> response) {
+            public void onResponse(Call<String> call, Response<String> response) {
                 if(!response.isSuccessful())
                 {
                     Toast toast = Toast.makeText(getApplication(), response.message(), Toast.LENGTH_LONG);
@@ -280,9 +289,9 @@ public class AdminActualizarParadaActivity extends AppCompatActivity {
                     Log.e("err: ",response.message());
                     return;
                 }
-                Parada ver = response.body();
+                String ver = response.body();
 
-                if(ver != null){
+                if(ver.equals("eliminado")){
                     limpiar();
                     inte.adminParadas();
                 }else{
@@ -293,7 +302,7 @@ public class AdminActualizarParadaActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Parada> call, Throwable t) {
+            public void onFailure(Call<String> call, Throwable t) {
                 Toast toast = Toast.makeText(getApplication(), t.getMessage(), Toast.LENGTH_LONG);
                 toast.show();
                 Log.e("err: ", t.getMessage());

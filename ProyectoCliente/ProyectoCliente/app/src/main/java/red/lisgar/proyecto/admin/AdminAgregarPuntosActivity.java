@@ -13,6 +13,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import red.lisgar.proyecto.constants.Intents;
 import red.lisgar.proyecto.R;
 import red.lisgar.proyecto.constants.urlDeLaApi;
@@ -134,7 +137,6 @@ public class AdminAgregarPuntosActivity extends AppCompatActivity {
                     punto.setMapa(mapa);
                     agregar(punto);
                     limpiar();
-                    inte.adminPuntos();
                 }else {
                     Toast.makeText(AdminAgregarPuntosActivity.this, "Rellene todos los campos", Toast.LENGTH_LONG).show();
                 }
@@ -145,9 +147,12 @@ public class AdminAgregarPuntosActivity extends AppCompatActivity {
 
     private void agregar(PuntoRecarga u)
     {
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(urlDeLaApi.URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         interfaces = retrofit.create(PuntosInterface.class);
         Call<String> call = interfaces.save(u);
