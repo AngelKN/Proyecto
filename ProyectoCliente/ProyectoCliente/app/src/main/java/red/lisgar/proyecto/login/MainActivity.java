@@ -1,6 +1,7 @@
 package red.lisgar.proyecto.login;
 
 import android.os.Bundle;
+import android.se.omapi.Session;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -124,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
         txtCorreo.setText("");
         txtpass.setText("");
     }
+
     @Override
     public void onBackPressed() {
         /*super.onBackPressed();*/
