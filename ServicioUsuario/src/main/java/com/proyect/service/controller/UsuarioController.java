@@ -104,5 +104,4 @@ public class UsuarioController {
 	public List<Cupo> cupoUser(@PathVariable("id") String id){
 		return service.cupoUser(id);
 	}
-	
 }

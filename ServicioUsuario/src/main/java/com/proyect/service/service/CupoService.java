@@ -14,9 +14,7 @@ public class CupoService {
 	
 	@Autowired
 	private CupoFeignClient fei;
-
-	//CUPO---------------------------------------------------------
-	//
+	
 	//NUEVA CUPO
 	public String saveCupo(Cupo cupo) {
 		String nuevo = fei.save(cupo);
@@ -46,6 +44,4 @@ public class CupoService {
 		String eliminar = fei.delete(nombre);
 		return eliminar;
 	}
-	
-
 }

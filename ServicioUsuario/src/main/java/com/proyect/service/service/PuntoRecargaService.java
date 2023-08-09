@@ -15,8 +15,6 @@ public class PuntoRecargaService {
 	@Autowired
 	private PuntoRecargaFeignClient fei;
 
-	//PUNTO DE RECARGA
-	//----------------------------------------------------------------
 	//NUEVO PUNTO
 	public String savePunto(PuntoRecarga pr) {
 		String nuevo = fei.save(pr);
@@ -45,6 +43,5 @@ public class PuntoRecargaService {
 	public String deletePunto(String id){
 		String eliminar = fei.delete(id);
 		return eliminar;
-	}
-	
+	}	
 }

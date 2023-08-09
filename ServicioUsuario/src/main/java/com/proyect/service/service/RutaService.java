@@ -22,8 +22,6 @@ public class RutaService {
 	@Autowired
 	private ParadaFeignClient feipa;
 	
-	//RUTA
-	//--------------------------------------------------------------------
 	//NUEVO RUTA
 	public String saveRuta(Ruta ruta) {
 		String nuevo = fei.save(ruta);
@@ -54,7 +52,7 @@ public class RutaService {
 		return eliminar;
 	}
 	
-	//paradasrutas
+	//PARADAS QUE SE ENCUENTREN EN LA LISTA DE LA RUTA
 	public List<Parada> pararuta(String id){
 		List<Parada> paradasRuta = new ArrayList<Parada>();
 		

@@ -56,6 +56,4 @@ public class CupoController {
 		String eliminar = serviceP.deleteCupo(id);
 		return eliminar;
 	}
-	
-
 }

@@ -62,5 +62,4 @@ public class RutaController {
 	public List<Parada> paradasRuta(@PathVariable("id") String id) {
 		return serviceR.pararuta(id);
 	}
-
 }

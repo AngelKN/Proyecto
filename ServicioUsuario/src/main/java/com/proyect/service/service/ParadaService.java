@@ -20,9 +20,7 @@ public class ParadaService {
 	
 	@Autowired
 	private RutaFeignClient feiR;
-
-	//PARADA---------------------------------------------------------
-	//
+	
 	//NUEVA PARADA
 	public String saveParada(Parada parada) {
 		String nuevo = fei.save(parada);
@@ -48,6 +46,7 @@ public class ParadaService {
 	}
 	
 	//ELIMINAR PARADA
+	//AL ELIMINAR UNA PARADA, AUTOMATICAMENTE BUSCARA LAS RUTAS QUE LA CONTENGAN Y LAS ELIMINARA DE LA LISTA
 	public String deleteParada(String id){
 		String eliminar = fei.delete(id);
 		
@@ -73,7 +72,7 @@ public class ParadaService {
 			updataRuta = feiR.update(ruta);
 		}
 		
-		return updataRuta;
+		return eliminar;
 	}
 
 }

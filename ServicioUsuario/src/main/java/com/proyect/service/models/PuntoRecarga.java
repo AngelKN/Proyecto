@@ -13,19 +13,13 @@ public class PuntoRecarga {
 		super();
 	}
 	
-	
-	
 	public String getId() {
 		return id;
 	}
 
-
-
 	public void setId(String id) {
 		this.id = id;
 	}
-
-
 
 	public String getNombre() {
 		return nombre;
@@ -50,7 +44,4 @@ public class PuntoRecarga {
 	public void setMapa(String mapa) {
 		this.mapa = mapa;
 	}
-
-	
-
 }

@@ -15,10 +15,12 @@ public class PuntoRecargarService {
 	@Autowired
 	private PuntoRecargarRepository repo;
 	
+	//PUNTOS DE RECARGA
 	public List<PuntoRecarga> getAll(){
 		return repo.findAll();
 	}
 	
+	//BUSACAR PUNTO DE RECARGAR
 	public Optional<PuntoRecarga> getUsuarioByNombre(String nombre){
 		Optional<PuntoRecarga> pr = java.util.Optional.empty();
 		
@@ -30,19 +32,15 @@ public class PuntoRecargarService {
 		
 		return pr;	
 	}
-	
+
+	//BUSACAR PUNTO DE RECARGAR POR ID
 	public Optional<PuntoRecarga> getUsuarioById(String id){
 		Optional<PuntoRecarga> punto = repo.findById(id);
-		
-		/*for(Ruta item :repo.findAll()) {
-			if(item.getNombre().equals(nombre)) {
-				ruta = repo.findById(item.getId());
-			}
-		}*/
-		
+				
 		return punto;	
 	}
 	
+	//AGREGAR PUNTO DE RECARGA
 	public boolean save(PuntoRecarga pr) {
 		Optional<PuntoRecarga> vpr = getUsuarioByNombre(pr.getNombre());
 		
@@ -54,6 +52,7 @@ public class PuntoRecargarService {
 		}
 	}
 	
+	//ELIMINAR PUNTO DE RECARGA
 	public boolean delete(String nombre) {
 		
 		Optional<PuntoRecarga> pr = getUsuarioById(nombre);
@@ -66,6 +65,7 @@ public class PuntoRecargarService {
 		}
 	}
 	
+	//ACTUALIZAR PUNTO DE RECARGA
 	public boolean update(PuntoRecarga pr) {
 
 		Optional<PuntoRecarga> vpr = getUsuarioById(pr.getId());

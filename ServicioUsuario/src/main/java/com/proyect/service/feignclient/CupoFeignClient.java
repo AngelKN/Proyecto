@@ -37,7 +37,7 @@ public interface CupoFeignClient {
 	@DeleteMapping("/delete/{id}")
 	public String delete(@PathVariable("id") String id);
 	
-	//PARADAS POR USER
+	//CUPOS POR USUARIO
 	@GetMapping("/id_user/{id}")
 	public List<Cupo> cupoUser(@PathVariable("id") String id);
 }

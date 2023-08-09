@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.proyect.service.entity.Usuario;
 import com.proyect.service.feignclient.CupoFeignClient;
 import com.proyect.service.models.Cupo;
-import com.proyect.service.models.Ruta;
 import com.proyect.service.repository.UsuarioRepository;
 
 @Service
@@ -22,8 +21,6 @@ public class UsuarioService {
 	@Autowired
 	private CupoFeignClient feic;
 	
-	//USUARIO
-	//--------------------------------------------------------------------
 	//LISTA USUARIOS
 	public List<Usuario> getAll(){
 		return repo.findAll();
@@ -61,12 +58,12 @@ public class UsuarioService {
 	}
 	
 	//ELIMINAR USUARIO
+	//TAMBIEN SE ELIMINAN TODAS LOS CUPOS(PUBLICACIONES)CREADAS POR EL USUARIO
 	public boolean delete(String id) {
 		
 		Optional<Usuario> user = getUsuarioById(id);
 		
 		String deleteUser;
-		Cupo id_parada;
 		List<String> id_parada1 = new ArrayList<String>();
 		
 		if(!user.equals(Optional.empty())){

@@ -27,11 +27,13 @@ public class ParadaController {
 		return "Miaow";
 	}
 	
+	//PARADAS
 	@GetMapping("/all")
 	public List<Parada> findAll(){
 		return service.getAll();
 	}
 	
+	//BUSACAR PARADA POR ID
 	@GetMapping("/find/{id}")
 	public Optional<Parada> findById(@PathVariable("id") String id){
 		Optional<Parada> parada = service.getUsuarioById(id);
@@ -42,6 +44,7 @@ public class ParadaController {
 		}
 	}
 	
+	//AGREGAR PARADA
 	@PostMapping("/save")
 	public String save(@RequestBody Parada parada) {
 		if(service.save(parada)) {
@@ -51,6 +54,7 @@ public class ParadaController {
 		}
 	}
 	
+	//ELIMINAR PARADA
 	@DeleteMapping("/delete/{id}")
 	public String delete(@PathVariable("id") String id) {
 		if(service.delete(id)) {
@@ -60,6 +64,7 @@ public class ParadaController {
 		}
 	}
 	
+	//ACTUALIZAR PARADA
 	@PostMapping("/update")
 	public String update(@RequestBody Parada parada) {
 		

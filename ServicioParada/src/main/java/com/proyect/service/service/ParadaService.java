@@ -15,10 +15,12 @@ public class ParadaService {
 	@Autowired
 	private ParadaRepository repo;
 	
+	//PARADAS
 	public List<Parada> getAll(){
 		return repo.findAll();
 	}
 	
+	//BUSCAR PARADA
 	public Optional<Parada> getUsuarioByUbicacion(String ubicacion){
 		Optional<Parada> parada = java.util.Optional.empty();
 		
@@ -31,12 +33,14 @@ public class ParadaService {
 		return parada;	
 	}
 	
+	//BUSCAR PARADA POR ID
 	public Optional<Parada> getUsuarioById(String id){
 		Optional<Parada> parada = repo.findById(id);
 		
 		return parada;	
 	}
 	
+	//AGREGAR PARADA
 	public boolean save(Parada parada) {
 		Optional<Parada> vparada = getUsuarioByUbicacion(parada.getUbicacion());
 		
@@ -48,6 +52,7 @@ public class ParadaService {
 		}
 	}
 	
+	//ELIMINAR PARADA
 	public boolean delete(String id) {
 		
 		Optional<Parada> parada = getUsuarioById(id);
@@ -60,6 +65,7 @@ public class ParadaService {
 		}
 	}
 	
+	//ACTUALIZAR PARADA
 	public boolean update(Parada parada) {
 
 		Optional<Parada> vparada = getUsuarioById(parada.getId());

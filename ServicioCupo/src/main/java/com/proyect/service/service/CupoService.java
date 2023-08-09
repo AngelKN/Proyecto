@@ -39,7 +39,6 @@ public class CupoService {
 	}
 	
 	public boolean save(Cupo parada) {
-		//Optional<Cupo> vparada = getUsuarioByUbicacion(parada.getUbicacion());
 		
 			repo.save(parada);
 			return true; 

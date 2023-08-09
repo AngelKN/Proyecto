@@ -28,11 +28,13 @@ public class PuntoRecargaController {
 		return "Miaow";
 	}
 	
+	//PUNTOS DE RECARGA
 	@GetMapping("/all")
 	public List<PuntoRecarga> findAll(){
 		return service.getAll();
 	}
 	
+	//BUSCAR PUNTOS DE RECARGAR POR ID
 	@GetMapping("/find/{id}")
 	public Optional<PuntoRecarga> findById(@PathVariable("id") String id){
 		Optional<PuntoRecarga> pr = service.getUsuarioById(id);
@@ -43,6 +45,7 @@ public class PuntoRecargaController {
 		}
 	}
 	
+	//AGREGAR PUNTO DE RECARGA
 	@PostMapping("/save")
 	public String save(@RequestBody PuntoRecarga pr) {
 		if(service.save(pr)) {
@@ -52,6 +55,7 @@ public class PuntoRecargaController {
 		}
 	}
 	
+	//ELIMINAR PUNTO DE RECARGA
 	@DeleteMapping("/delete/{id}")
 	public String delete(@PathVariable("id") String id) {
 		if(service.delete(id)) {
@@ -61,6 +65,7 @@ public class PuntoRecargaController {
 		}
 	}
 	
+	//ACTUALIZAR PUNTO DE RECARGA
 	@PostMapping("/update")
 	public String update(@RequestBody PuntoRecarga pr) {
 		

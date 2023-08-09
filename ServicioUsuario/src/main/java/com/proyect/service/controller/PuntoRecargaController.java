@@ -56,5 +56,4 @@ public class PuntoRecargaController {
 		String eliminar = servicePR.deletePunto(id);
 		return eliminar;
 	}
-
 }

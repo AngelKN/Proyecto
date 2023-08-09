@@ -56,6 +56,4 @@ public class ParadaController {
 		String eliminar = serviceP.deleteParada(id);
 		return eliminar;
 	}
-	
-
 }
