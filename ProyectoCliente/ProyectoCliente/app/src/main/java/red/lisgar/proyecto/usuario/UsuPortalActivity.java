@@ -73,7 +73,7 @@ public class UsuPortalActivity extends AppCompatActivity implements SearchView.O
         imgBarra = findViewById(R.id.imgBarra);
         imgBarra.setImageResource(R.drawable.admin);
         btnMas.setImageResource(R.drawable.ic_mas);
-        rolToolbar.setText("Administrador");
+        rolToolbar.setText(sHarePreference.getNombre());
         rvLista = findViewById(R.id.recyclerCupos);
         nombreToolbar.setText(sHarePreference.getCorreo());
         LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -81,6 +81,13 @@ public class UsuPortalActivity extends AppCompatActivity implements SearchView.O
         lista();
 
         buscadorAdminDispon.setOnQueryTextListener(this);
+
+        rolToolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                inte.actualizarUser();
+            }
+        });
 
         //MENU POPUP
         btnMas.setOnClickListener(new View.OnClickListener() {

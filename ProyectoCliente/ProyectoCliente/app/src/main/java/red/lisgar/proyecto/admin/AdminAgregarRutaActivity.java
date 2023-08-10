@@ -94,7 +94,7 @@ public class AdminAgregarRutaActivity extends AppCompatActivity {
         rolToolbar = findViewById(R.id.rolToolbar);
         btnMas = findViewById(R.id.btnMas);
         nombreToolbar = findViewById(R.id.nombreToolbar);
-        rolToolbar.setText("Administrador");
+        rolToolbar.setText(sHarePreference.getNombre());
         nombreToolbar.setText(sHarePreference.getCorreo());
 
         btnMas.setOnClickListener(new View.OnClickListener() {

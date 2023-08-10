@@ -75,7 +75,7 @@ public class AdminParadasActivity extends AppCompatActivity implements SearchVie
         imgBarra = findViewById(R.id.imgBarra);
         imgBarra.setImageResource(R.drawable.admin);
         btnMas.setImageResource(R.drawable.ic_mas);
-        rolToolbar.setText("Administrador");
+        rolToolbar.setText(sHarePreference.getNombre());
         rvLista = findViewById(R.id.recyclerId);
         nombreToolbar.setText(sHarePreference.getCorreo());
         GridLayoutManager manager = new GridLayoutManager(this, 2);

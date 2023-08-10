@@ -22,12 +22,6 @@ public class RutaService {
 	public Optional<Ruta> getUsuarioById(String id){
 		Optional<Ruta> ruta = repo.findById(id);
 		
-		/*for(Ruta item :repo.findAll()) {
-			if(item.getNombre().equals(nombre)) {
-				ruta = repo.findById(item.getId());
-			}
-		}*/
-		
 		return ruta;	
 	}
 	

@@ -69,7 +69,7 @@ public class MisPublicacionesActivity extends AppCompatActivity implements Searc
         imgBarra = findViewById(R.id.imgBarra);
         imgBarra.setImageResource(R.drawable.admin);
         btnMas.setImageResource(R.drawable.ic_mas);
-        rolToolbar.setText("Administrador");
+        rolToolbar.setText(sHarePreference.getNombre());
         rvLista = findViewById(R.id.recyclerPrestados);
         nombreToolbar.setText(sHarePreference.getCorreo());
         LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -78,7 +78,12 @@ public class MisPublicacionesActivity extends AppCompatActivity implements Searc
 
         buscadorAdminDispon.setOnQueryTextListener(this);
 
-
+        rolToolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                inte.actualizarUser();
+            }
+        });
 
         //MENU POPUP
         btnMas.setOnClickListener(new View.OnClickListener() {

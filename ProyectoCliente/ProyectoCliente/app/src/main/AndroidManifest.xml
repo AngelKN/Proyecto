@@ -31,9 +31,6 @@
             android:name=".usuario.UsuPortalActivity"
             android:exported="false" />
         <activity
-            android:name=".usuario.UsuVisualizarPuntosActivity"
-            android:exported="false" />
-        <activity
             android:name=".usuario.UsuPuntosActivity"
             android:exported="false" />
         <activity
@@ -59,9 +56,6 @@
             android:exported="false" />
         <activity
             android:name=".admin.AdminParadasActivity"
-            android:exported="false" />
-        <activity
-            android:name=".admin.AdminMenu"
             android:exported="false" />
         <activity
             android:name=".admin.AdminAgregarRutaActivity"

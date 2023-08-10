@@ -81,10 +81,15 @@ public class UsuPuntosActivity extends AppCompatActivity implements SearchView.O
         btnMas.setImageResource(R.drawable.ic_mas);
         imgBarra.setImageResource(R.drawable.admin);
         usuario = new Usuario();
-        rolToolbar.setText("Usuario");
-        if (usuario != null) {
-            nombreToolbar.setText(usuario.getNombre());
-        }
+        rolToolbar.setText(sHarePreference.getNombre());
+        nombreToolbar.setText(sHarePreference.getCorreo());
+
+        rolToolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                inte.actualizarUser();
+            }
+        });
 
         //MENU POPUP
         btnMas.setOnClickListener(new View.OnClickListener() {
@@ -159,7 +164,7 @@ public class UsuPuntosActivity extends AppCompatActivity implements SearchView.O
                     return;
                 }
                 List<PuntoRecarga> user = response.body();
-                String actualizar = "VERLIBRO";
+                String actualizar = "VERPARADAS";
                 String ventana = "HORIZONTAL";
                 adapter = new ListaPuntosAdapter((ArrayList<PuntoRecarga>) user, UsuPuntosActivity.this, actualizar, ventana);
                 recyclerView.setAdapter(adapter);
@@ -182,7 +187,7 @@ public class UsuPuntosActivity extends AppCompatActivity implements SearchView.O
 
     @Override
     public boolean onQueryTextChange(String s) {
-        adapter.filtrado(s);
+        adapter.filter(s);
         return false;
     }
     @Override

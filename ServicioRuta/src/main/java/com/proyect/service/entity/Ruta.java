@@ -1,6 +1,5 @@
 package com.proyect.service.entity;
 
-
 import java.util.List;
 
 import org.springframework.data.annotation.Id;

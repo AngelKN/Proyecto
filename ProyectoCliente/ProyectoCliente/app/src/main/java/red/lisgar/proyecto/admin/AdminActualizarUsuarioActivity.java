@@ -82,6 +82,7 @@ public class AdminActualizarUsuarioActivity extends AppCompatActivity {
         imgBarra.setImageResource(R.drawable.admin);
         nombreToolbar = findViewById(R.id.nombreToolbar);
         nombreToolbar.setText(sHarePreference.getCorreo());
+        rolToolbar.setText(sHarePreference.getNombre());
 
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
@@ -94,12 +95,10 @@ public class AdminActualizarUsuarioActivity extends AppCompatActivity {
 
         if(!sHarePreference.getRol().equals("ADMIN")){
             ocultar();
-            rolToolbar.setText(sHarePreference.getCorreo());
             ver(sHarePreference.getId());
             user.setId(sHarePreference.getId());
             user.setRol("USER");
         }else{
-            rolToolbar.setText("Administrador");
             user.setId(id);
             user.setRol("ADMIN");
             ver(id);

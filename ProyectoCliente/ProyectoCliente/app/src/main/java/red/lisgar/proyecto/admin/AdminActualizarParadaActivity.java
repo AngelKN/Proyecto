@@ -82,7 +82,7 @@ public class AdminActualizarParadaActivity extends AppCompatActivity {
         nombreToolbar = findViewById(R.id.nombreToolbar);
         imgBarra = findViewById(R.id.imgBarra);
         imgBarra.setImageResource(R.drawable.admin);
-        rolToolbar.setText("Administrador");
+        rolToolbar.setText(sHarePreference.getNombre());
         nombreToolbar.setText(sHarePreference.getCorreo());
 
         btnMas.setOnClickListener(new View.OnClickListener() {

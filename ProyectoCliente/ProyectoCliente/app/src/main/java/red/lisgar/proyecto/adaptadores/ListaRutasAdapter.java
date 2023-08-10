@@ -24,7 +24,7 @@ import red.lisgar.proyecto.admin.AdminActualizarRutaActivity;
 import red.lisgar.proyecto.usuario.UsuVisualizarRutaActivity;
 import red.lisgar.proyecto.entidades.Ruta;
 
-public class ListaRutasAdapter extends RecyclerView.Adapter<ListaRutasAdapter.LibrosDisponiblesViewHolder> {
+public class ListaRutasAdapter extends RecyclerView.Adapter<ListaRutasAdapter.RutasViewHolder> {
 
     ArrayList<Ruta> listaOriginal;
     ArrayList<Ruta> listItem;
@@ -43,27 +43,31 @@ public class ListaRutasAdapter extends RecyclerView.Adapter<ListaRutasAdapter.Li
 
     @NonNull
     @Override
-    public ListaRutasAdapter.LibrosDisponiblesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RutasViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
 
+        //CUAL LAYOUT SE UTILIZARA PARA EL ADAPTER
         switch (ventana){
+            //VISATA DEL ADMINISTRADOR
             case "VERTICAL":
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rutas, parent, false);
-                return new LibrosDisponiblesViewHolder(view);
+                return new RutasViewHolder(view);
+            //VISATA DEL USUARIO
             case "HORIZONTAL":
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rutas_user, parent, false);
-                return new LibrosDisponiblesViewHolder(view);
+                return new RutasViewHolder(view);
             default:
                 throw new IllegalStateException("Unexpected value: " + ventana);
         }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ListaRutasAdapter.LibrosDisponiblesViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RutasViewHolder holder, int position) {
         final Ruta item = listItem.get(position);
 
-
+        //MANIPULACION DE DATOS EN EL LAYOUT
         switch (ventana){
+            //VISATA DEL ADMINISTRADOR
             case "VERTICAL":
                 Glide.with(context)
                         .load(item.getFoto())
@@ -73,6 +77,7 @@ public class ListaRutasAdapter extends RecyclerView.Adapter<ListaRutasAdapter.Li
                 holder.precioRuta.setText("$"+item.getPrecio());
                 holder.descripcionRuta.setText("Descripción: "+item.getDescripcion());
                 break;
+            //VISATA DEL USUARIO
             case "HORIZONTAL":
                 Glide.with(context)
                         .load(item.getFoto())
@@ -85,6 +90,7 @@ public class ListaRutasAdapter extends RecyclerView.Adapter<ListaRutasAdapter.Li
         }
     }
 
+    //FILTRAR LA LISTA DE RUTAS DE ACUERDO AL NOMBRE DE LA RUTA
     public void filter(String buscar){
         int longitud = buscar.length();
 
@@ -112,7 +118,7 @@ public class ListaRutasAdapter extends RecyclerView.Adapter<ListaRutasAdapter.Li
         return listItem.size();
     }
 
-    public class LibrosDisponiblesViewHolder extends RecyclerView.ViewHolder {
+    public class RutasViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imgRuta;
         TextView nombreRuta;
@@ -125,7 +131,7 @@ public class ListaRutasAdapter extends RecyclerView.Adapter<ListaRutasAdapter.Li
         TextView descripcion;
 
 
-        public LibrosDisponiblesViewHolder(@NonNull View itemView) {
+        public RutasViewHolder(@NonNull View itemView) {
             super(itemView);
             imgRuta = itemView.findViewById(R.id.imagenRutasDisponibles);
             nombreRuta = itemView.findViewById(R.id.txtItemNombreRuta);
@@ -143,6 +149,8 @@ public class ListaRutasAdapter extends RecyclerView.Adapter<ListaRutasAdapter.Li
                     Context context = view.getContext();
                     Intent intent;
                     String id;
+
+                    //DIRECCIONAMIENTO
                     switch (destino){
                         case "ACTUALIZAR":
                             intent = new Intent(context, AdminActualizarRutaActivity.class);
@@ -160,26 +168,5 @@ public class ListaRutasAdapter extends RecyclerView.Adapter<ListaRutasAdapter.Li
                 }
             });
         }
-    }
-
-    public void filtrado(String txtBuscar){
-        int longitud = txtBuscar.length();
-        if (longitud == 0){
-            listItem.clear();
-            listItem.addAll(listaOriginal);
-        }else{
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N){
-                List<Ruta> collection = listItem.stream().filter(i -> i.getNombre().toLowerCase().contains(txtBuscar.toLowerCase())).collect(Collectors.toList());
-                listItem.clear();
-                listItem.addAll(collection);
-            }else {
-                for (Ruta l: listaOriginal){
-                    if (l.getNombre().toLowerCase().contains(txtBuscar.toLowerCase())){
-                        listItem.add(l);
-                    }
-                }
-            }
-        }
-        notifyDataSetChanged();
     }
 }

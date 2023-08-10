@@ -19,7 +19,7 @@ import red.lisgar.proyecto.R;
 import red.lisgar.proyecto.admin.AdminActualizarParadaActivity;
 import red.lisgar.proyecto.entidades.Parada;
 
-public class ListaParadasAdapter extends RecyclerView.Adapter<ListaParadasAdapter.LibrosDisponiblesViewHolder> {
+public class ListaParadasAdapter extends RecyclerView.Adapter<ListaParadasAdapter.ParadasViewHolder> {
 
     ArrayList<Parada> listaOriginal;
     ArrayList<Parada> listItem;
@@ -38,36 +38,42 @@ public class ListaParadasAdapter extends RecyclerView.Adapter<ListaParadasAdapte
 
     @NonNull
     @Override
-    public ListaParadasAdapter.LibrosDisponiblesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ParadasViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
 
+        //CUAL LAYOUT SE UTILIZARA PARA EL ADAPTER
         switch (ventana){
+            //VISATA DEL ADMINISTRADOR
             case "VERTICAL":
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item2, parent, false);
-                return new LibrosDisponiblesViewHolder(view);
+                return new ParadasViewHolder(view);
+            //VISATA DEL USUARIO
             case "RUTA":
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_paradas_ruta, parent, false);
-                return new LibrosDisponiblesViewHolder(view);
+                return new ParadasViewHolder(view);
             default:
                 throw new IllegalStateException("Unexpected value: " + ventana);
         }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull LibrosDisponiblesViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ParadasViewHolder holder, int position) {
         final Parada item = listItem.get(position);
 
-
+        //MANIPULACION DE DATOS EN EL LAYOUT
         switch (ventana){
+            //VISATA DEL ADMINISTRADOR
             case "VERTICAL":
                 holder.ubicacion.setText(item.getUbicacion());
                 break;
+            //VISATA DEL USUARIO
             case "RUTA":
                 holder.ubicacion2.setText(item.getUbicacion());
                 break;
         }
     }
 
+    //FILTRAR LA LISTA DE PARADAS DE ACUERDO A LA DIRECCION
     public void filter(String buscar){
         int longitud = buscar.length();
 
@@ -95,7 +101,7 @@ public class ListaParadasAdapter extends RecyclerView.Adapter<ListaParadasAdapte
         return listItem.size();
     }
 
-    public class LibrosDisponiblesViewHolder extends RecyclerView.ViewHolder {
+    public class ParadasViewHolder extends RecyclerView.ViewHolder {
 
         TextView ubicacion;
 
@@ -104,7 +110,7 @@ public class ListaParadasAdapter extends RecyclerView.Adapter<ListaParadasAdapte
         TextView mapa;
 
 
-        public LibrosDisponiblesViewHolder(@NonNull View itemView) {
+        public ParadasViewHolder(@NonNull View itemView) {
             super(itemView);
             ubicacion = itemView.findViewById(R.id.txtItem1);
 
@@ -116,6 +122,8 @@ public class ListaParadasAdapter extends RecyclerView.Adapter<ListaParadasAdapte
                     Context context = view.getContext();
                     Intent intent;
                     String id;
+
+                    //DIRECCIONAMIENTO
                     switch (destino){
                         case "ACTUALIZAR":
                             intent = new Intent(context, AdminActualizarParadaActivity.class);

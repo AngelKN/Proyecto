@@ -79,11 +79,17 @@ public class UsuVisualizarRutaActivity extends AppCompatActivity {
         nombreToolbar = findViewById(R.id.nombreToolbar);
 
         //TOOLBAR
-        nombreToolbar.setText(sHarePreference.getCorreo());
         imgBarra.setImageResource(R.drawable.admin);
         Usuario usuario = new Usuario();
         rolToolbar.setText(sHarePreference.getNombre());
         nombreToolbar.setText(sHarePreference.getCorreo());
+
+        rolToolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                inte.actualizarUser();
+            }
+        });
 
         if (usuario != null) {
             nombreToolbar.setText(usuario.getNombre());

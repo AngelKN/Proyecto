@@ -79,8 +79,8 @@ public class UsuRutasActivity extends AppCompatActivity implements SearchView.On
         btnMas.setImageResource(R.drawable.ic_mas);
         imgBarra.setImageResource(R.drawable.admin);
         usuario = new Usuario();
-        rolToolbar.setText(sHarePreference.getCorreo());
-        nombreToolbar.setText(sHarePreference.getNombre());
+        rolToolbar.setText(sHarePreference.getNombre());
+        nombreToolbar.setText(sHarePreference.getCorreo());
 
         rolToolbar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,7 +184,7 @@ public class UsuRutasActivity extends AppCompatActivity implements SearchView.On
 
     @Override
     public boolean onQueryTextChange(String s) {
-        adapter.filtrado(s);
+        adapter.filter(s);
         return false;
     }
     @Override

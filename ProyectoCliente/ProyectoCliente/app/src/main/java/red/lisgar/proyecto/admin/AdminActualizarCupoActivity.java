@@ -82,7 +82,7 @@ public class AdminActualizarCupoActivity extends AppCompatActivity {
         nombreToolbar = findViewById(R.id.nombreToolbar);
         imgBarra = findViewById(R.id.imgBarra);
         imgBarra.setImageResource(R.drawable.admin);
-        rolToolbar.setText("Administrador");
+        rolToolbar.setText(sHarePreference.getNombre());
         nombreToolbar.setText(sHarePreference.getCorreo());
 
         if(!sHarePreference.getRol().equals("ADMIN")){

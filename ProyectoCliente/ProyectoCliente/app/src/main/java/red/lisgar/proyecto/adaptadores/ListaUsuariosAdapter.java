@@ -11,19 +11,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import red.lisgar.proyecto.R;
 import red.lisgar.proyecto.admin.AdminActualizarUsuarioActivity;
-import red.lisgar.proyecto.usuario.UsuRutasActivity;
-import red.lisgar.proyecto.usuario.UsuVisualizarRutaActivity;
 import red.lisgar.proyecto.entidades.Usuario;
 
-public class ListaUsuariosAdapter extends RecyclerView.Adapter<ListaUsuariosAdapter.LibrosDisponiblesViewHolder> {
+public class ListaUsuariosAdapter extends RecyclerView.Adapter<ListaUsuariosAdapter.UsuariosViewHolder> {
 
     ArrayList<Usuario> listaOriginal;
     ArrayList<Usuario> listItem;
@@ -42,33 +38,38 @@ public class ListaUsuariosAdapter extends RecyclerView.Adapter<ListaUsuariosAdap
 
     @NonNull
     @Override
-    public ListaUsuariosAdapter.LibrosDisponiblesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public UsuariosViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
 
+        //CUAL LAYOUT SE UTILIZARA PARA EL ADAPTER
         switch (ventana){
+            //VISATA DEL ADMINISTRADOR
             case "VERTICAL":
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
-                return new LibrosDisponiblesViewHolder(view);
+                return new UsuariosViewHolder(view);
+            //VISATA DEL USUARIO
             case "HORIZONTAL":
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rutas_user, parent, false);
-                return new LibrosDisponiblesViewHolder(view);
+                return new UsuariosViewHolder(view);
             default:
                 throw new IllegalStateException("Unexpected value: " + ventana);
         }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ListaUsuariosAdapter.LibrosDisponiblesViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull UsuariosViewHolder holder, int position) {
         final Usuario item = listItem.get(position);
 
-
+        //MANIPULACION DE DATOS EN EL LAYOUT
         switch (ventana){
+            //VISATA DEL ADMINISTRADOR
             case "VERTICAL":
                 holder.nombre.setText("Nombre: "+item.getNombre());
                 holder.correo.setText("Correo:   "+item.getCorreo());
                 holder.telefono.setText("Telefono: "+item.getTelefono());
                 holder.direccion.setText(item.getDireccion());
                 break;
+            //VISATA DEL USUARIO
             case "HORIZONTAL":
                 holder.txtUbicacionU.setText(item.getNombre());
                 holder.txtMapaU.setText(item.getDireccion());
@@ -77,6 +78,7 @@ public class ListaUsuariosAdapter extends RecyclerView.Adapter<ListaUsuariosAdap
         }
     }
 
+    //FILTRAR LA LISTA DE USUARIOS DE ACUERDO AL NOMBRE DEL USUARIO
     public void filter(String buscar){
         int longitud = buscar.length();
 
@@ -104,7 +106,7 @@ public class ListaUsuariosAdapter extends RecyclerView.Adapter<ListaUsuariosAdap
         return listItem.size();
     }
 
-    public class LibrosDisponiblesViewHolder extends RecyclerView.ViewHolder {
+    public class UsuariosViewHolder extends RecyclerView.ViewHolder {
 
         TextView nombre;
         TextView correo;
@@ -117,7 +119,7 @@ public class ListaUsuariosAdapter extends RecyclerView.Adapter<ListaUsuariosAdap
         TextView txtIdRuta;
 
 
-        public LibrosDisponiblesViewHolder(@NonNull View itemView) {
+        public UsuariosViewHolder(@NonNull View itemView) {
             super(itemView);
             nombre = itemView.findViewById(R.id.txtItem1);
             correo = itemView.findViewById(R.id.txtItem2);
@@ -135,6 +137,8 @@ public class ListaUsuariosAdapter extends RecyclerView.Adapter<ListaUsuariosAdap
                     Context context = view.getContext();
                     Intent intent;
                     String id;
+
+                    //DIRECCIONAMIENTO
                     switch (destino){
                         case "ACTUALIZAR":
                             intent = new Intent(context, AdminActualizarUsuarioActivity.class);
@@ -146,26 +150,5 @@ public class ListaUsuariosAdapter extends RecyclerView.Adapter<ListaUsuariosAdap
                 }
             });
         }
-    }
-
-    public void filtrado(String txtBuscar){
-        int longitud = txtBuscar.length();
-        if (longitud == 0){
-            listItem.clear();
-            listItem.addAll(listaOriginal);
-        }else{
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N){
-                List<Usuario> collection = listItem.stream().filter(i -> i.getNombre().toLowerCase().contains(txtBuscar.toLowerCase())).collect(Collectors.toList());
-                listItem.clear();
-                listItem.addAll(collection);
-            }else {
-                for (Usuario l: listaOriginal){
-                    if (l.getDireccion().toLowerCase().contains(txtBuscar.toLowerCase())){
-                        listItem.add(l);
-                    }
-                }
-            }
-        }
-        notifyDataSetChanged();
     }
 }

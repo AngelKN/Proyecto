@@ -18,7 +18,7 @@ import red.lisgar.proyecto.R;
 import red.lisgar.proyecto.admin.AdminActualizarCupoActivity;
 import red.lisgar.proyecto.entidades.Cupo;
 
-public class ListaCuposAdapter extends RecyclerView.Adapter<ListaCuposAdapter.LibrosDisponiblesViewHolder> {
+public class ListaCuposAdapter extends RecyclerView.Adapter<ListaCuposAdapter.CuposViewHolder> {
 
     ArrayList<Cupo> listaOriginal;
     ArrayList<Cupo> listItem;
@@ -37,33 +37,37 @@ public class ListaCuposAdapter extends RecyclerView.Adapter<ListaCuposAdapter.Li
 
     @NonNull
     @Override
-    public ListaCuposAdapter.LibrosDisponiblesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CuposViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
-
+        //CUAL LAYOUT SE UTILIZARA PARA EL ADAPTER
         switch (ventana){
+            //VISATA DEL ADMINISTRADOR
             case "VERTICAL":
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
-                return new LibrosDisponiblesViewHolder(view);
+                return new CuposViewHolder(view);
+            //VISATA DEL USUARIO
             case "HORIZONTAL":
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_user, parent, false);
-                return new LibrosDisponiblesViewHolder(view);
+                return new CuposViewHolder(view);
             default:
                 throw new IllegalStateException("Unexpected value: " + ventana);
         }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull LibrosDisponiblesViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CuposViewHolder holder, int position) {
         final Cupo item = listItem.get(position);
 
-
+        //MANIPULACION DE DATOS EN EL LAYOUT
         switch (ventana){
+            //VISATA DEL ADMINISTRADOR
             case "VERTICAL":
                 holder.precio.setText("Valor:  "+item.getPrecio()+"");
                 holder.horaI.setText("Desde: "+item.getHora_llegada());
                 holder.horaS.setText("Hasta: "+item.getHora_salida());
                 holder.descripcion.setText("Descripcion: "+item.getDescripcion());
                 break;
+            //VISATA DEL USUARIO
             case "HORIZONTAL":
                 holder.precioU.setText("$"+item.getPrecio());
                 holder.horaIU.setText(item.getHora_llegada());
@@ -73,6 +77,7 @@ public class ListaCuposAdapter extends RecyclerView.Adapter<ListaCuposAdapter.Li
         }
     }
 
+    //FILTRAR LA LISTA DE PUBLICACIONES DE ACUERDO A LA DESCRIPCION
     public void filter(String buscar){
         int longitud = buscar.length();
 
@@ -100,7 +105,7 @@ public class ListaCuposAdapter extends RecyclerView.Adapter<ListaCuposAdapter.Li
         return listItem.size();
     }
 
-    public class LibrosDisponiblesViewHolder extends RecyclerView.ViewHolder {
+    public class CuposViewHolder extends RecyclerView.ViewHolder {
 
         TextView precio;
         TextView horaI;
@@ -113,7 +118,7 @@ public class ListaCuposAdapter extends RecyclerView.Adapter<ListaCuposAdapter.Li
         TextView descripcionU;
 
 
-        public LibrosDisponiblesViewHolder(@NonNull View itemView) {
+        public CuposViewHolder(@NonNull View itemView) {
             super(itemView);
             precio = itemView.findViewById(R.id.txtItem1);
             horaI = itemView.findViewById(R.id.txtItem2);
@@ -131,6 +136,8 @@ public class ListaCuposAdapter extends RecyclerView.Adapter<ListaCuposAdapter.Li
                     Context context = view.getContext();
                     Intent intent;
                     String id;
+
+                    //DIRECCIONAMIENTO
                     switch (destino){
                         case "ACTUALIZAR":
                             intent = new Intent(context, AdminActualizarCupoActivity.class);

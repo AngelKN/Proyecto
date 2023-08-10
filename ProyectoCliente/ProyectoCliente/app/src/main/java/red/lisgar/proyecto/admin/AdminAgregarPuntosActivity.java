@@ -78,7 +78,7 @@ public class AdminAgregarPuntosActivity extends AppCompatActivity {
         imgBarra = findViewById(R.id.imgBarra);
         imgBarra.setImageResource(R.drawable.admin);
         nombreToolbar = findViewById(R.id.nombreToolbar);
-        rolToolbar.setText("Administrador");
+        rolToolbar.setText(sHarePreference.getNombre());
         nombreToolbar.setText(sHarePreference.getCorreo());
 
         btnMas.setOnClickListener(new View.OnClickListener() {
