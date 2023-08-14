@@ -42,7 +42,7 @@ public class AdminAgregarRutaActivity extends AppCompatActivity {
     EditText descripcionAgregarRuta;
     EditText precioAgregarRuta;
     EditText fotoAgregarRuta;
-    EditText tipoAgregarRuta;
+    Spinner tipoAgregarRuta;
     Button btnAgregarRuta;
     ImageButton btnAgregar1;
     ImageButton btnAgregar2;
@@ -66,6 +66,7 @@ public class AdminAgregarRutaActivity extends AppCompatActivity {
     List<String> listId = new ArrayList<String>();
     List<Parada> listParada1 = new ArrayList<Parada>();
     List<Parada> listParada2 = new ArrayList<Parada>();
+    List<String> listipo = new ArrayList<String>();
     Intents inte = new Intents(AdminAgregarRutaActivity.this);
 
     @Override
@@ -134,6 +135,11 @@ public class AdminAgregarRutaActivity extends AppCompatActivity {
             }
         });
 
+        listipo.add("METROLINEA");
+        listipo.add("BUSETA");
+        ArrayAdapter<String> adaptertipo = new ArrayAdapter<String>(AdminAgregarRutaActivity.this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, (ArrayList) listipo);
+        tipoAgregarRuta.setAdapter(adaptertipo);
+
         paradas();
 
         btnAgregar1.setOnClickListener(new View.OnClickListener() {
@@ -180,7 +186,6 @@ public class AdminAgregarRutaActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Parada parada = (Parada) spinner1.getSelectedItem();
-                //String id = parada.getId();
                 boolean veri = true;
 
                 for(Parada i : listParada2) {
@@ -222,7 +227,7 @@ public class AdminAgregarRutaActivity extends AppCompatActivity {
                 String descripcion = descripcionAgregarRuta.getText().toString().trim();
                 double precio = Double.parseDouble(precioAgregarRuta.getText().toString().trim());
                 String foto = fotoAgregarRuta.getText().toString().trim();
-                String tipo = tipoAgregarRuta.getText().toString().trim();
+                String tipo = tipoAgregarRuta.getSelectedItem().toString();
 
                 //OBLIGATORIEDAD DE TODOS LOS CAMPOS
                 if (!TextUtils.isEmpty(Nombre) && !TextUtils.isEmpty(descripcion) && !TextUtils.isEmpty(foto) && !TextUtils.isEmpty(tipo)) {
@@ -324,7 +329,6 @@ public class AdminAgregarRutaActivity extends AppCompatActivity {
         descripcionAgregarRuta.setText("");
         precioAgregarRuta.setText("");
         fotoAgregarRuta.setText("");
-        tipoAgregarRuta.setText("");
     }
     @Override
     public void onBackPressed() {

@@ -69,6 +69,9 @@ public class ListaRutasAdapter extends RecyclerView.Adapter<ListaRutasAdapter.Ru
         switch (ventana){
             //VISATA DEL ADMINISTRADOR
             case "VERTICAL":
+                if(item.getTipo().equalsIgnoreCase("METROLINEA")){
+                    holder.card.setVisibility(View.VISIBLE);
+                }
                 Glide.with(context)
                         .load(item.getFoto())
                         .placeholder(R.drawable.ic_launcher_background)
@@ -79,6 +82,9 @@ public class ListaRutasAdapter extends RecyclerView.Adapter<ListaRutasAdapter.Ru
                 break;
             //VISATA DEL USUARIO
             case "HORIZONTAL":
+                if(item.getTipo().equalsIgnoreCase("METROLINEA")){
+                holder.cardU.setVisibility(View.VISIBLE);
+                }
                 Glide.with(context)
                         .load(item.getFoto())
                         .placeholder(R.drawable.ic_launcher_background)
@@ -120,11 +126,13 @@ public class ListaRutasAdapter extends RecyclerView.Adapter<ListaRutasAdapter.Ru
 
     public class RutasViewHolder extends RecyclerView.ViewHolder {
 
+        ImageView card;
         ImageView imgRuta;
         TextView nombreRuta;
         TextView precioRuta;
         TextView descripcionRuta;
 
+        ImageView cardU;
         ImageView imgRutaU;
         TextView nombre;
         TextView precio;
@@ -133,11 +141,13 @@ public class ListaRutasAdapter extends RecyclerView.Adapter<ListaRutasAdapter.Ru
 
         public RutasViewHolder(@NonNull View itemView) {
             super(itemView);
+            card = itemView.findViewById(R.id.card);
             imgRuta = itemView.findViewById(R.id.imagenRutasDisponibles);
             nombreRuta = itemView.findViewById(R.id.txtItemNombreRuta);
             precioRuta = itemView.findViewById(R.id.txtItemPrecioRuta);
             descripcionRuta = itemView.findViewById(R.id.txtItemDescripcion);
 
+            cardU = itemView.findViewById(R.id.card);
             imgRutaU = itemView.findViewById(R.id.imagenRutasPrestados);
             nombre = itemView.findViewById(R.id.txtItemNombre);
             descripcion = itemView.findViewById(R.id.txtItemDescripcion);
