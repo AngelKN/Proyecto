@@ -3,6 +3,7 @@ package red.lisgar.proyecto.admin;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -35,8 +37,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class AdminActualizarCupoActivity extends AppCompatActivity {
 
     EditText precioActualizarCupo;
-    EditText horaIActualizarCupo;
-    EditText horaSActualizarCupo;
+    Button horaIActualizarCupo;
+    Button horaSActualizarCupo;
     EditText descripcionActualizarCupo;
     TextView usuarioCupo;
     Button btnActualizarCupo;
@@ -136,6 +138,20 @@ public class AdminActualizarCupoActivity extends AppCompatActivity {
         }
 
         ver(id);
+
+        horaIActualizarCupo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openTimePickerI();
+            }
+        });
+
+        horaSActualizarCupo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openTimePickerS();
+            }
+        });
 
         btnActualizarCupo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -296,7 +312,7 @@ public class AdminActualizarCupoActivity extends AppCompatActivity {
                 }
                 String save = response.body();
 
-                if(save.equals("guardado")){
+                if(save.equals("actualizado")){
                     Toast toast = Toast.makeText(getApplication(), "REGISTRO SATISFACTORIO", Toast.LENGTH_LONG);
                     toast.show();
                     usu();
@@ -375,6 +391,35 @@ public class AdminActualizarCupoActivity extends AppCompatActivity {
         btnParadas.setVisibility(View.INVISIBLE);
         btnUsuarios.setVisibility(View.INVISIBLE);
     }
+
+    private void openTimePickerI(){
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int hour, int minute) {
+                //Showing the picked value in the textView
+                horaIActualizarCupo.setText(String.valueOf(hour)+ ":"+String.valueOf(minute));
+
+            }
+        }, 15, 30, false);
+
+        timePickerDialog.show();
+    }
+
+    private void openTimePickerS(){
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int hour, int minute) {
+                //Showing the picked value in the textView
+                horaSActualizarCupo.setText(String.valueOf(hour)+ ":"+String.valueOf(minute));
+
+            }
+        }, 15, 30, false);
+
+        timePickerDialog.show();
+    }
+
     private void usu(){
         if(!sHarePreference.getRol().equals("ADMIN")){
             inte.usuCupos();

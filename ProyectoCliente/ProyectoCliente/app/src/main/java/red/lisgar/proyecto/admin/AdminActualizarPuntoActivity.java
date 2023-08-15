@@ -242,12 +242,12 @@ public class AdminActualizarPuntoActivity extends AppCompatActivity {
                 }
                 String save = response.body();
 
-                if(save.equals("guardado")){
+                if(save.equals("actualizado")){
                     Toast toast = Toast.makeText(getApplication(), "REGISTRO SATISFACTORIO", Toast.LENGTH_LONG);
                     toast.show();
                     inte.adminPuntos();
                 }else{
-                    Toast toast = Toast.makeText(getApplication(), "LA PARADA SE ENCUENTRA EN USO", Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(getApplication(), "EÑ ÚNTO DE RECARGA SE ENCUENTRA EN USO", Toast.LENGTH_LONG);
                     toast.show();
                     limpiar();
                 }
@@ -290,7 +290,7 @@ public class AdminActualizarPuntoActivity extends AppCompatActivity {
                     limpiar();
                     inte.adminPuntos();
                 }else{
-                    Toast toast = Toast.makeText(getApplication(), "ERROR AL ELIMINAR LA PARADA", Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(getApplication(), "ERROR AL ELIMINAR EL PUNTO DE RECARGA", Toast.LENGTH_LONG);
                     toast.show();
                 }
 

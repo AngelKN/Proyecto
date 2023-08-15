@@ -173,7 +173,7 @@ public class AdminAgregarPuntosActivity extends AppCompatActivity {
                     toast.show();
                     inte.adminPuntos();
                 }else{
-                    Toast toast = Toast.makeText(getApplication(), "LA PARADA SE ENCUENTRA EN USO", Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(getApplication(), "EL PUNTO DE RECARGA SE ENCUENTRA EN USO", Toast.LENGTH_LONG);
                     toast.show();
                     limpiar();
                 }

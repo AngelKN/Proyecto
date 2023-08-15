@@ -62,7 +62,7 @@
                 android:textColor="#656565"
                 android:textSize="20sp" />
 
-            <EditText
+            <Button
                 android:id="@+id/horaIActualizarCupo"
                 android:layout_width="match_parent"
                 android:layout_height="63dp"
@@ -89,7 +89,7 @@
                 android:textSize="20sp" />
 
 
-            <EditText
+            <Button
                 android:id="@+id/horaSActualizarCupo"
                 android:layout_width="match_parent"
                 android:layout_height="63dp"

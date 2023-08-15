@@ -43,7 +43,7 @@
                 android:textColorHint="#8da000"
                 android:textSize="20sp" />
 
-            <EditText
+            <Button
                 android:id="@+id/horaIAgregarCupo"
                 android:layout_width="match_parent"
                 android:layout_height="63dp"
@@ -60,7 +60,7 @@
                 android:textColorHint="#8da000"
                 android:textSize="20sp" />
 
-            <EditText
+            <Button
                 android:id="@+id/horaSAgregarCupo"
                 android:layout_width="match_parent"
                 android:layout_height="63dp"

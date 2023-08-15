@@ -2,6 +2,7 @@ package red.lisgar.proyecto.admin;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -34,8 +36,8 @@ public class AdminAgregarCupoActivity extends AppCompatActivity {
 
     //LAYOUT
     EditText precioAgregarCupo;
-    EditText horaIAgregarCupo;
-    EditText horaSAgregarCupo;
+    Button horaIAgregarCupo;
+    Button horaSAgregarCupo;
     EditText descripcionAgregarCupo;
     Button btnAgregarCupo;
     TextView rolToolbar;
@@ -133,6 +135,20 @@ public class AdminAgregarCupoActivity extends AppCompatActivity {
         //AGREGAR LIBRO
         cupo = new Cupo();
 
+        horaIAgregarCupo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openTimePickerI();
+            }
+        });
+
+        horaSAgregarCupo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openTimePickerS();
+            }
+        });
+
         btnAgregarCupo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -188,7 +204,7 @@ public class AdminAgregarCupoActivity extends AppCompatActivity {
                     toast.show();
                     usu();
                 }else{
-                    Toast toast = Toast.makeText(getApplication(), "LA PARADA SE ENCUENTRA EN USO", Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(getApplication(), "LA PUBLICACION SE ENCUENTRA EN USO", Toast.LENGTH_LONG);
                     toast.show();
                     limpiar();
                 }
@@ -220,6 +236,34 @@ public class AdminAgregarCupoActivity extends AppCompatActivity {
         btnRutas.setVisibility(View.INVISIBLE);
         btnParadas.setVisibility(View.INVISIBLE);
         btnUsuarios.setVisibility(View.INVISIBLE);
+    }
+
+    private void openTimePickerI(){
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int hour, int minute) {
+                //Showing the picked value in the textView
+                horaIAgregarCupo.setText(String.valueOf(hour)+ ":"+String.valueOf(minute));
+
+            }
+        }, 15, 30, false);
+
+        timePickerDialog.show();
+    }
+
+    private void openTimePickerS(){
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int hour, int minute) {
+                //Showing the picked value in the textView
+                horaSAgregarCupo.setText(String.valueOf(hour)+ ":"+String.valueOf(minute));
+
+            }
+        }, 15, 30, false);
+
+        timePickerDialog.show();
     }
 
     private void usu(){

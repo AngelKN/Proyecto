@@ -161,7 +161,6 @@ public class AdminActualizarUsuarioActivity extends AppCompatActivity {
                     user.setContraseña(contresena);
                     editar(user);
                     limpiar();
-                    usu();
                 }else {
                     Toast.makeText(AdminActualizarUsuarioActivity.this, "Rellene todos los campos", Toast.LENGTH_LONG).show();
                 }
@@ -263,12 +262,12 @@ public class AdminActualizarUsuarioActivity extends AppCompatActivity {
                 }
                 String save = response.body();
 
-                if(save.equals("guardado")){
+                if(save.equals("actualizado")){
                     Toast toast = Toast.makeText(getApplication(), "REGISTRO SATISFACTORIO", Toast.LENGTH_LONG);
                     toast.show();
                     usu();
                 }else{
-                    Toast toast = Toast.makeText(getApplication(), "LA PARADA SE ENCUENTRA EN USO", Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(getApplication(), "EL USUARIO SE ENCUENTRA EN USO", Toast.LENGTH_LONG);
                     toast.show();
                     limpiar();
                 }
