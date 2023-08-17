@@ -1,6 +1,8 @@
 package red.lisgar.proyecto.login;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -8,16 +10,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import red.lisgar.proyecto.constants.Intents;
 import red.lisgar.proyecto.R;
+import red.lisgar.proyecto.constants.JavaMailAPI;
 import red.lisgar.proyecto.constants.urlDeLaApi;
 import red.lisgar.proyecto.entidades.Usuario;
 import red.lisgar.proyecto.interfaces.UsuarioInterface;
@@ -80,7 +85,6 @@ public class SigninActivity extends AppCompatActivity {
                                 usuario.setDireccion(Direccion);
                                 usuario.setContraseña(Contrasena);
                                 usuario.setRol("USER");
-                                limpiar();
                                 correo(Correo, usuario);
                             }else{
                                 txtContrasena2.setText("");
@@ -143,10 +147,11 @@ public class SigninActivity extends AppCompatActivity {
                     Toast toast = Toast.makeText(getApplication(), "REGISTRO SATISFACTORIO", Toast.LENGTH_LONG);
                     toast.show();
                     inte.Main();
+                    limpiar();
                 }else{
                     Toast toast = Toast.makeText(getApplication(), "EL CORREO SE ENCUENTRA EN USO", Toast.LENGTH_LONG);
                     toast.show();
-                    limpiar();
+                    txtCorreosignin.setText("");
                 }
             }
 
@@ -180,11 +185,11 @@ public class SigninActivity extends AppCompatActivity {
                 Usuario save = response.body();
 
                 if(save == null){
-                    registrar(user);
+                    sendMail(user);
                 }else{
                     Toast toast = Toast.makeText(getApplication(), "El correo ya se encuentra en uso", Toast.LENGTH_LONG);
                     toast.show();
-                    limpiar();
+                    txtCorreosignin.setText("");
                 }
             }
 
@@ -195,6 +200,44 @@ public class SigninActivity extends AppCompatActivity {
                 Log.e("err: ", t.getMessage());
             }
         });
+    }
+
+    private void sendMail(Usuario user) {
+
+        String mail = "redmakota@gmail.com";
+        String message = UUID.randomUUID().toString().toUpperCase().substring(0, 6);
+        String subject = "CODIGO DE VERIFICACION";
+
+        //Send Mail
+        JavaMailAPI javaMailAPI = new JavaMailAPI(this,mail,subject,message);
+
+        javaMailAPI.execute();
+
+        AlertDialog.Builder alerta = new AlertDialog.Builder(SigninActivity.this);
+        alerta.setTitle("INGRESE EL CODIGO");
+
+        final EditText ver = new EditText(SigninActivity.this);
+        ver.setInputType(InputType.TYPE_CLASS_TEXT);
+
+        alerta.setView(ver);
+        alerta.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if(ver.getText().toString().equals(message)){
+                    registrar(user);
+                }else{
+                    Toast toast = Toast.makeText(getApplication(), "EL CODIGO NO ES CORRECTO", Toast.LENGTH_LONG);
+                    toast.show();
+                }
+            }
+        });
+        alerta.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+        alerta.show();
     }
 
     private void limpiar(){

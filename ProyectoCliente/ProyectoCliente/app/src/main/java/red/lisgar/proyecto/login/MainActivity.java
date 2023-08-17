@@ -1,7 +1,6 @@
 package red.lisgar.proyecto.login;
 
 import android.os.Bundle;
-import android.se.omapi.Session;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +10,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.UUID;
+
+import red.lisgar.proyecto.constants.JavaMailAPI;
 import red.lisgar.proyecto.constants.Intents;
 import red.lisgar.proyecto.R;
 import red.lisgar.proyecto.constants.urlDeLaApi;
@@ -61,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
                 login(user);
                 limpiar();
+
             }
         });
 

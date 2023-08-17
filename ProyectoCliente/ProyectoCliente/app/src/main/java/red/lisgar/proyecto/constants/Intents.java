@@ -3,6 +3,9 @@ package red.lisgar.proyecto.constants;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.text.InputType;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
@@ -26,6 +29,8 @@ import red.lisgar.proyecto.usuario.UsuRutasActivity;
 public class Intents {
 
     Context context;
+
+    boolean correcto;
 
     public Intents(Context context) {
         this.context = context;
