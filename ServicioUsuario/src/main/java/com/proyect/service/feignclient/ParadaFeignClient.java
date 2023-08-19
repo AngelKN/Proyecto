@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.proyect.service.models.Parada;
 
-@FeignClient(name = "ServicioParada")
+@FeignClient(name = "ServicioParada", url = "http://localhost:9994")
 @RequestMapping("/parada")
 public interface ParadaFeignClient {
 

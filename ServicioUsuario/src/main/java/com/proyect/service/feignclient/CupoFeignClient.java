@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.proyect.service.models.Cupo;
 
-@FeignClient(name = "ServicioCupo")
+@FeignClient(name = "ServicioCupo", url = "http://localhost:9995")
 @RequestMapping("/cupo")
 public interface CupoFeignClient {
 

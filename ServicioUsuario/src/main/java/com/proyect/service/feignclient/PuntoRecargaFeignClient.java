@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.proyect.service.models.PuntoRecarga;
 
-@FeignClient(name = "ServicioPuntoRecarga")
+@FeignClient(name = "ServicioPuntoRecarga", url = "http://localhost:9993")
 @RequestMapping("/punto")
 public interface PuntoRecargaFeignClient {
 
